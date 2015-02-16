@@ -1,6 +1,6 @@
 {
   "name": "mozaik-ext-travis",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Mozaik travis widgets",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/plouc/mozaik-ext-travis",
   "dependencies": {},
-  "main": "./travis.js",
+  "main": "./components.js",
   "devDependencies": {
     "d3": "^3.5.5",
     "del": "^1.1.1",

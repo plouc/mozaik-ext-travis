@@ -1,5 +1,7 @@
 # Mozaïk travis widgets
 
+[![Travis CI](https://img.shields.io/travis/plouc/mozaik-ext-travis.svg?style=flat-square)](https://travis-ci.org/plouc/mozaik-ext-travis)
+
 ## Travis Repository
 
 ![travis repository](https://raw.githubusercontent.com/plouc/mozaik-ext-travis/master/preview/travis.repository.png)

@@ -2,7 +2,7 @@
 
 ## Travis Repository
 
-![travis repository](https://raw.githubusercontent.com/wiki/plouc/mozaik/assets/travis.repository.png)
+![travis repository](https://raw.githubusercontent.com/plouc/mozaik-ext-travis/master/preview/travis.repository.png)
 
 > Display travis repo infos
 
@@ -27,7 +27,7 @@ key          | required | description
 
 ## Travis Build history
 
-![travis build history](https://raw.githubusercontent.com/wiki/plouc/mozaik/assets/travis.build_history.png)
+![travis build history](https://raw.githubusercontent.com/plouc/mozaik-ext-travis/master/preview/travis.build_history.png)
 
 > Display travis repo build history
 
@@ -52,7 +52,7 @@ key          | required | description
 
 ## Travis Build histogram
 
-![travis build histogram](https://raw.githubusercontent.com/wiki/plouc/mozaik/assets/travis.build_histogram.png)
+![travis build histogram](https://raw.githubusercontent.com/plouc/mozaik-ext-travis/master/preview/travis.build_histogram.png)
 
 > Display travis repo build histogram (duration / build number / status)
 

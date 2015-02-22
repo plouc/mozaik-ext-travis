@@ -1,5 +1,9 @@
 jest.dontMock('./../components/Repository.jsx');
 
+jest.setMock('mozaik/browser', {
+    Mixin: { ApiConsumer: null }
+});
+
 var React, TestUtils, Repository, repository;
 
 describe('Travis — Repository', function () {

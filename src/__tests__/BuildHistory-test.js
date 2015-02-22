@@ -1,6 +1,10 @@
 jest.dontMock('./../components/BuildHistory.jsx');
 jest.dontMock('./../components/BuildHistoryItem.jsx');
 
+jest.setMock('mozaik/browser', {
+    Mixin: { ApiConsumer: null }
+});
+
 var React, TestUtils, BuildHistory, buildHistory;
 
 var sampleBuilds = [

@@ -1,5 +1,10 @@
-module.exports = {
-    Repository:     require('./Repository.jsx'),
-    BuildHistory:   require('./BuildHistory.jsx'),
-    BuildHistogram: require('./BuildHistogram.jsx')
+import Repository     from './Repository.jsx';
+import BuildHistory   from './BuildHistory.jsx';
+import BuildHistogram from './BuildHistogram.jsx';
+
+
+export default {
+    Repository:     Repository,
+    BuildHistory:   BuildHistory,
+    BuildHistogram: BuildHistogram
 };

@@ -1,41 +1,36 @@
-var React            = require('react');
-var Reflux           = require('reflux');
-var _                = require('lodash');
-var moment           = require('moment');
-var ApiConsumerMixin = require('mozaik/browser').Mixin.ApiConsumer;
+import React, { Component, PropTypes } from 'react';
+import { ListenerMixin }               from 'reflux';
+import reactMixin                      from 'react-mixin';
+import _                               from 'lodash';
+import moment                          from 'moment';
+import Mozaik                          from 'mozaik/browser';
 
-var Repository = React.createClass({
-    mixins: [
-        Reflux.ListenerMixin,
-        ApiConsumerMixin
-    ],
 
-    propTypes: {
-        owner:      React.PropTypes.string.isRequired,
-        repository: React.PropTypes.string.isRequired
-    },
-
-    getInitialState() {
-        return {
+class Repository extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
             repository: null
         };
-    },
+    }
 
     getApiRequest() {
+        let { owner, repository } = this.props;
+
         return {
-            id: 'travis.repository.' + this.props.owner + '.' + this.props.repository,
+            id:     `travis.repository.${ owner }.${ repository }`,
             params: {
-                owner:      this.props.owner,
-                repository: this.props.repository
+                owner:      owner,
+                repository: repository
             }
         };
-    },
+    }
 
     onApiData(repository) {
         this.setState({
             repository: repository
         });
-    },
+    }
 
     render() {
 
@@ -92,6 +87,14 @@ var Repository = React.createClass({
             </div>
         );
     }
-});
+}
 
-module.exports = Repository;
+Repository.propTypes = {
+    owner:      PropTypes.string.isRequired,
+    repository: PropTypes.string.isRequired
+};
+
+reactMixin(Repository.prototype, ListenerMixin);
+reactMixin(Repository.prototype, Mozaik.Mixin.ApiConsumer);
+
+export { Repository as default };

@@ -1,7 +1,7 @@
-var Promise = require('bluebird');
-var Travis  = require('travis-ci');
-var _       = require('lodash');
-var chalk   = require('chalk');
+import Promise from 'bluebird';
+import Travis  from 'travis-ci';
+import _       from 'lodash';
+import chalk   from 'chalk';
 
 var travis = new Travis({
     version: '2.0.0'
@@ -10,7 +10,7 @@ var travis = new Travis({
 /**
  * @param {Mozaik} context
  */
-var client = function (context) {
+const client = function (context) {
     return {
         repository(params) {
             var def = Promise.defer();
@@ -46,4 +46,4 @@ var client = function (context) {
     };
 };
 
-module.exports = client;
+export { client as default };

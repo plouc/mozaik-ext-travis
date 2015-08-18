@@ -6,6 +6,7 @@
     "type": "git",
     "url": "git://github.com/plouc/mozaik-ext-travis"
   },
+  "license": "MIT",
   "author": {
     "name": "Raphaël Benitte",
     "url": "https://github.com/plouc"
@@ -14,6 +15,7 @@
     "node": "0.12.x"
   },
   "homepage": "https://github.com/plouc/mozaik-ext-travis",
+  "main": "./src/components/index.js",
   "dependencies": {
     "babelify": "^6.1.3",
     "bluebird": "^2.9.9",
@@ -27,8 +29,22 @@
     "react-mixin": "^1.7.0",
     "reflux": "^0.2.5"
   },
-  "main": "./src/components/index.js",
   "devDependencies": {
+    "babel": "^5.8.12",
+    "babel-eslint": "^1.0.6",
+    "chai": "^3.2.0",
+    "eslint": "^0.15.1",
+    "jsdom": "^2.0.0",
+    "mocha": "^2.2.5",
+    "mockery": "^1.4.0",
+    "sinon": "^1.15.4"
+  },
+  "peerDependencies": {
+    "mozaik": "1.x"
+  },
+  "scripts": {
+    "test": "mocha --opts mocha.opts ./src/tests/**/*.test.js",
+    "eslint": "eslint ./src/*"
   },
   "browserify": {
     "transform": [

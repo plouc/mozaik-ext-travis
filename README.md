@@ -1,6 +1,8 @@
 # Mozaïk travis widgets
 
 [![Travis CI](https://img.shields.io/travis/plouc/mozaik-ext-travis.svg?style=flat-square)](https://travis-ci.org/plouc/mozaik-ext-travis)
+[![NPM version](https://img.shields.io/npm/v/plouc/mozaik-ext-travis.svg?style=flat-square)](https://www.npmjs.com/package/mozaik-ext-travis)
+
 
 ## Travis Repository
 

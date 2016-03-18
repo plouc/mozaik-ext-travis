@@ -10,13 +10,15 @@ var travis = new Travis({
 /**
  * @param {Mozaik} context
  */
-const client = function (context) {
+const client = (context) => {
     return {
         repository(params) {
-            var def = Promise.defer();
+            const def = Promise.defer();
 
-            travis.repos(params.owner, params.repository).get(function (err, res) {
-                if (err) { def.reject(err); }
+            travis.repos(params.owner, params.repository).get((err, res) => {
+                if (err) {
+                    def.reject(err);
+                }
 
                 def.resolve(res.repo);
             });
@@ -25,14 +27,15 @@ const client = function (context) {
         },
 
         buildHistory(params) {
-            var def = Promise.defer();
+            const def = Promise.defer();
 
-            travis.repos(params.owner, params.repository).builds.get(function (err, res) {
-                if (err) { def.reject(err); }
+            travis.repos(params.owner, params.repository).builds.get((err, res) => {
+                if (err) {
+                    def.reject(err);
+                }
 
-                var commit;
-                res.builds.forEach(function (build) {
-                    commit = _.find(res.commits, { id: build.commit_id });
+                res.builds.forEach(build => {
+                    let commit = _.find(res.commits, { id: build.commit_id });
                     if (commit) {
                         build.commit = commit;
                     }
@@ -46,4 +49,5 @@ const client = function (context) {
     };
 };
 
-export { client as default };
+
+export default client;

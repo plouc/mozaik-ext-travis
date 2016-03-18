@@ -1,28 +1,44 @@
-var React  = require('react');
-var moment = require('moment');
+import React, { Component, PropTypes } from 'react';
+import moment                          from 'moment';
 
-var BuildHistoryItem = React.createClass({
+
+class BuildHistoryItem extends Component {
     render() {
+        const { build } = this.props;
 
-        var commitNode = null;
-        if (this.props.build.commit) {
+        let commitNode = null;
+        if (build.commit) {
             commitNode = (
-                <span className="travis__build-history__item__message">{this.props.build.commit.message}</span>
+                <span className="travis__build-history__item__message">{build.commit.message}</span>
             );
         }
 
-        var cssClasses = 'list__item list__item--with-status travis__build-history__item travis__build-history__item--' + this.props.build.state;
+        const cssClasses = `list__item list__item--with-status travis__build-history__item travis__build-history__item--${build.state}`;
 
         return (
             <div className={cssClasses}>
-                #{this.props.build.number} {commitNode}<br />
+                #{build.number} {commitNode}<br />
                 <time className="list__item__time">
                     <i className="fa fa-clock-o" />&nbsp;
-                    {moment(this.props.build.finished_at).fromNow()}
+                    {moment(build.finished_at).fromNow()}
                 </time>
             </div>
         );
     }
-});
+}
 
-module.exports = BuildHistoryItem;
+BuildHistoryItem.displayName = 'BuildHistoryItem';
+
+BuildHistoryItem.propTypes = {
+    build: PropTypes.shape({
+        number:      PropTypes.string.isRequired,
+        state:       PropTypes.string.isRequired,
+        finished_at: PropTypes.string.isRequired,
+        commit:      PropTypes.shape({
+            message: PropTypes.string.isRequired
+        })
+    }).isRequired
+};
+
+
+export default BuildHistoryItem;

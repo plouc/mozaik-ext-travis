@@ -48,6 +48,9 @@
     "mockery": "^1.4.0",
     "sinon": "^1.15.4"
   },
+  "peerDependencies": {
+    "mozaik": ">=1.0.10"
+  },
   "scripts": {
     "eslint": "eslint --ext .js --ext .jsx ./src/*",
     "test": "ava"

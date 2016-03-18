@@ -3,6 +3,8 @@
 [![Travis CI][travis-image]][travis-url]
 [![NPM version][npm-image]][npm-url]
 [![Dependencies][gemnasium-image]][gemnasium-url]
+[![Coverage Status][coveralls-image]][coveralls-url]
+
 
 ## Demo
 
@@ -90,3 +92,5 @@ key          | required | description
 [npm-url]: https://www.npmjs.com/package/mozaik-ext-travis
 [gemnasium-image]: https://img.shields.io/gemnasium/plouc/mozaik-ext-travis.svg?style=flat-square
 [gemnasium-url]: https://gemnasium.com/plouc/mozaik-ext-travis
+[coveralls-image]: https://img.shields.io/coveralls/plouc/mozaik-ext-travis/master.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/github/plouc/mozaik-ext-travis?branch=master

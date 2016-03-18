@@ -55,8 +55,10 @@
   },
   "scripts": {
     "eslint": "eslint --ext .js --ext .jsx ./src/*",
-    "test": "nyc ava",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "test": "ava",
+    "test-cover": "nyc ava",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "cover-report": "nyc report --reporter=lcov && open coverage/lcov-report/index.html"
   },
   "browserify": {
     "transform": [
@@ -71,6 +73,7 @@
   },
   "nyc": {
     "extension": [
+      ".js",
       ".jsx"
     ]
   }

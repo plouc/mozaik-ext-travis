@@ -4,6 +4,7 @@
 [![NPM version][npm-image]][npm-url]
 [![Dependencies][gemnasium-image]][gemnasium-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
+![widget count][widget-count-image]
 
 
 ## Demo
@@ -94,3 +95,4 @@ key          | required | description
 [gemnasium-url]: https://gemnasium.com/plouc/mozaik-ext-travis
 [coveralls-image]: https://img.shields.io/coveralls/plouc/mozaik-ext-travis/master.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/github/plouc/mozaik-ext-travis?branch=master
+[widget-count-image]: https://img.shields.io/badge/widgets-x3-green.svg?style=flat-square

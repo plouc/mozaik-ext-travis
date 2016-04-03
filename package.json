@@ -12,7 +12,8 @@
     "url": "https://github.com/plouc"
   },
   "engines": {
-    "node": ">=0.12.0"
+    "node": ">=0.12.0",
+    "npm" : ">=3.0.0"
   },
   "homepage": "https://github.com/plouc/mozaik-ext-travis",
   "main": "./src/components/index.js",
@@ -52,10 +53,11 @@
     "sinon": "1.17.3"
   },
   "peerDependencies": {
-    "mozaik": ">=1.0.10"
+    "mozaik": ">=1.1.0",
+    "react": "^0.13.3"
   },
   "scripts": {
-    "eslint": "eslint --ext .js --ext .jsx ./src/*",
+    "eslint": "eslint --ext .js --ext .jsx ./src/** ./test/**",
     "test": "ava",
     "test-cover": "nyc ava",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
@@ -67,14 +69,18 @@
     ]
   },
   "ava": {
-    "babel": "inherit",
+    "files": [
+      "test/**/*.test.js"
+    ],
+    "tap": false,
+    "failFast": true,
     "require": [
       "babel-register"
-    ]
+    ],
+    "babel": "inherit"
   },
   "nyc": {
     "extension": [
-      ".js",
       ".jsx"
     ]
   },

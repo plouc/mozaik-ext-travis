@@ -1,53 +1,42 @@
-var React            = require('react');
-var Reflux           = require('reflux');
-var moment           = require('moment');
-var ApiConsumerMixin = require('mozaik/browser').Mixin.ApiConsumer;
-var BuildHistoryItem = require('./BuildHistoryItem.jsx');
+import React, { Component, PropTypes } from 'react';
+import reactMixin                      from 'react-mixin';
+import { ListenerMixin }               from 'reflux';
+import BuildHistoryItem                from './BuildHistoryItem.jsx';
+import Mozaik                          from 'mozaik/browser';
 
-var BuildHistory = React.createClass({
-    mixins: [
-        Reflux.ListenerMixin,
-        ApiConsumerMixin
-    ],
 
-    propTypes: {
-        owner:      React.PropTypes.string.isRequired,
-        repository: React.PropTypes.string.isRequired
-    },
+class BuildHistory extends Component {
+    constructor(props) {
+        super(props);
 
-    getInitialState: function () {
+        this.state = { builds: [] };
+    }
+
+    getApiRequest() {
+        const { owner, repository } = this.props;
+
         return {
-            builds: []
+            id:     `travis.buildHistory.${owner}.${repository}`,
+            params: { owner, repository }
         };
-    },
+    }
 
-    getApiRequest: function () {
-        return {
-            id: 'travis.buildHistory.' + this.props.owner + '.' + this.props.repository,
-            params: {
-                owner:      this.props.owner,
-                repository: this.props.repository
-            }
-        };
-    },
+    onApiData(builds) {
+        this.setState({ builds });
+    }
 
-    onApiData: function (builds) {
-        this.setState({
-            builds: builds
-        });
-    },
+    render() {
+        const { owner, repository } = this.props;
+        const { builds }            = this.state;
 
-    render: function () {
-        var buildNodes = this.state.builds.map(function (build) {
-            return (
-                <BuildHistoryItem key={build.id} build={build} />
-            );
-        });
+        const buildNodes = builds.map(build => (
+            <BuildHistoryItem key={build.id} build={build} />
+        ));
 
         return (
             <div>
                 <div className="widget__header">
-                    <span className="widget__header__subject">{this.props.owner}/{this.props.repository}</span> build history
+                    <span className="widget__header__subject">{owner}/{repository}</span> build history
                     <i className="fa fa-bug" />
                 </div>
                 <div className="widget__body">
@@ -56,6 +45,17 @@ var BuildHistory = React.createClass({
             </div>
         );
     }
-});
+}
 
-module.exports = BuildHistory;
+BuildHistory.displayName = 'BuildHistory';
+
+BuildHistory.propTypes = {
+    owner:      React.PropTypes.string.isRequired,
+    repository: React.PropTypes.string.isRequired
+};
+
+reactMixin(BuildHistory.prototype, ListenerMixin);
+reactMixin(BuildHistory.prototype, Mozaik.Mixin.ApiConsumer);
+
+
+export default BuildHistory;

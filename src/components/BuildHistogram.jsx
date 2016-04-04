@@ -73,4 +73,5 @@ BuildHistogram.propTypes = {
 reactMixin(BuildHistogram.prototype, ListenerMixin);
 reactMixin(BuildHistogram.prototype, Mozaik.Mixin.ApiConsumer);
 
-export { BuildHistogram as default };
+
+export default BuildHistogram;

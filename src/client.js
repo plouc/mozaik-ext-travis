@@ -3,20 +3,34 @@ import Travis  from 'travis-ci';
 import _       from 'lodash';
 import chalk   from 'chalk';
 
-var travis = new Travis({
-    version: '2.0.0'
-});
 
 /**
- * @param {Mozaik} context
+ * @param {Mozaik} mozaik
+ * @returns {Function}
  */
-const client = function (context) {
-    return {
-        repository(params) {
-            var def = Promise.defer();
+const client = mozaik => {
+    const travis = new Travis({
+        version: '2.0.0'
+    });
 
-            travis.repos(params.owner, params.repository).get(function (err, res) {
-                if (err) { def.reject(err); }
+    return {
+        /**
+         * Fetch repository info.
+         *
+         * @param {object} params
+         * @param {string} params.owner
+         * @param {string} params.repository
+         * @returns {Promise}
+         */
+        repository({ owner, repository }) {
+            const def = Promise.defer();
+
+            mozaik.logger.info(chalk.yellow(`[travis] calling repository: ${owner}/${repository}`));
+
+            travis.repos(owner, repository).get((err, res) => {
+                if (err) {
+                    def.reject(err);
+                }
 
                 def.resolve(res.repo);
             });
@@ -24,15 +38,26 @@ const client = function (context) {
             return def.promise;
         },
 
-        buildHistory(params) {
-            var def = Promise.defer();
+        /**
+         * Fetch repository build history.
+         *
+         * @param {object} params
+         * @param {string} params.owner
+         * @param {string} params.repository
+         * @returns {Promise}
+         */
+        buildHistory({ owner, repository }) {
+            const def = Promise.defer();
 
-            travis.repos(params.owner, params.repository).builds.get(function (err, res) {
-                if (err) { def.reject(err); }
+            mozaik.logger.info(chalk.yellow(`[travis] calling buildHistory: ${owner}/${repository}`));
 
-                var commit;
-                res.builds.forEach(function (build) {
-                    commit = _.find(res.commits, { id: build.commit_id });
+            travis.repos(owner, repository).builds.get((err, res) => {
+                if (err) {
+                    def.reject(err);
+                }
+
+                res.builds.forEach(build => {
+                    const commit = _.find(res.commits, { id: build.commit_id });
                     if (commit) {
                         build.commit = commit;
                     }
@@ -46,4 +71,5 @@ const client = function (context) {
     };
 };
 
-export { client as default };
+
+export default client;

@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { ListenerMixin }               from 'reflux';
 import reactMixin                      from 'react-mixin';
-import _                               from 'lodash';
 import moment                          from 'moment';
 import Mozaik                          from 'mozaik/browser';
 
@@ -19,10 +18,7 @@ class Repository extends Component {
 
         return {
             id:     `travis.repository.${ owner }.${ repository }`,
-            params: {
-                owner:      owner,
-                repository: repository
-            }
+            params: { owner, repository }
         };
     }
 
@@ -67,7 +63,7 @@ class Repository extends Component {
                 </div>
             );
 
-            cssClasses = 'travis__repository--' + this.state.repository.last_build_state;
+            cssClasses = `travis__repository--${this.state.repository.last_build_state}`;
         }
 
         return (
@@ -77,7 +73,7 @@ class Repository extends Component {
                         <span className="widget__header__subject">{this.state.repository ? this.state.repository.slug : ''}</span>
                     </span>
                     <span className="widget__header__count">
-                        {this.state.repository ? '#' + this.state.repository.last_build_number : ''}
+                        {this.state.repository ? `#${this.state.repository.last_build_number}` : ''}
                     </span>
                     <i className="fa fa-bug" />
                 </div>
@@ -89,6 +85,8 @@ class Repository extends Component {
     }
 }
 
+Repository.displayName = 'Repository';
+
 Repository.propTypes = {
     owner:      PropTypes.string.isRequired,
     repository: PropTypes.string.isRequired
@@ -97,4 +95,5 @@ Repository.propTypes = {
 reactMixin(Repository.prototype, ListenerMixin);
 reactMixin(Repository.prototype, Mozaik.Mixin.ApiConsumer);
 
-export { Repository as default };
+
+export default Repository;

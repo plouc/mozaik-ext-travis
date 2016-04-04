@@ -4,7 +4,7 @@ import BuildHistogram from './BuildHistogram.jsx';
 
 
 export default {
-    Repository:     Repository,
-    BuildHistory:   BuildHistory,
-    BuildHistogram: BuildHistogram
+    Repository,
+    BuildHistory,
+    BuildHistogram
 };

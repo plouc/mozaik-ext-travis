@@ -1,36 +1,22 @@
-import React, { Component, PropTypes } from 'react';
-import reactMixin                      from 'react-mixin';
-import { ListenerMixin }               from 'reflux';
-import _                               from 'lodash';
-import Mozaik                          from 'mozaik/browser';
-const { BarChart }                     = Mozaik.Component;
+import React, { Component, PropTypes } from 'react'
+import _                               from 'lodash'
+import Mozaik                          from 'mozaik/ui'
+import { BuildPropType }               from './BuildHistoryItem'
+const { BarChart }                     = Mozaik
 
 
 class BuildHistogram extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { builds: [] };
-    }
-
-    getApiRequest() {
-        let { owner, repository } = this.props;
-
+    static getApiRequest({ owner, repository }) {
         return {
             id:     `travis.buildHistory.${ owner }.${ repository }`,
-            params: {
-                owner:      owner,
-                repository: repository
-            }
-        };
-    }
-
-    onApiData(builds) {
-        this.setState({ builds: _.clone(builds).reverse() });
+            params: { owner, repository },
+        }
     }
 
     render() {
-        let { owner, repository } = this.props;
-        let { builds }            = this.state;
+        let { owner, repository, apiData: builds } = this.props
+
+        builds = _.clone(builds).reverse()
 
         // converts to format required by BarChart component
         let data = builds.map(build => {
@@ -38,8 +24,8 @@ class BuildHistogram extends Component {
                 x:     build.number,
                 y:     build.duration / 60, // converts s to mn
                 state: build.state
-            };
-        });
+            }
+        })
 
         let barChartOptions = {
             mode:            'stacked',
@@ -48,8 +34,8 @@ class BuildHistogram extends Component {
             yLegend:         'duration (minutes)',
             yLegendPosition: 'top',
             xPadding:        0.3,
-            barClass:        function (d) { return `result--${ d.state }`; }
-        };
+            barClass:        function (d) { return `result--${ d.state }` }
+        }
 
         return (
             <div>
@@ -61,17 +47,19 @@ class BuildHistogram extends Component {
                     <BarChart data={[{ data: data }]} options={barChartOptions}/>
                 </div>
             </div>
-        );
+        )
     }
 }
 
 BuildHistogram.propTypes = {
     owner:      PropTypes.string.isRequired,
-    repository: PropTypes.string.isRequired
-};
+    repository: PropTypes.string.isRequired,
+    apiData:    PropTypes.arrayOf(BuildPropType),
+}
 
-reactMixin(BuildHistogram.prototype, ListenerMixin);
-reactMixin(BuildHistogram.prototype, Mozaik.Mixin.ApiConsumer);
+BuildHistogram.defaultProps = {
+    apiData: [],
+}
 
 
-export default BuildHistogram;
+export default BuildHistogram

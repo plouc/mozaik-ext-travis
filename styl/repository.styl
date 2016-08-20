@@ -1,0 +1,25 @@
+.travis__repository .widget__header {
+  padding-left: 35px;
+}
+.travis__repository .widget__header:before {
+  content " ";
+  display block;
+  width  16px;
+  height 16px;
+  position absolute;
+  themify: top @(c) { return (c.widget-header-height - 16px) / 2 };
+  left 12px;
+  themify: border @(c) { return 2px solid c.widget-bg-color };
+  border-radius 100%;
+  themify: background-color color-unknown;
+}
+.travis__repository--errored .widget__header:before,
+.travis__repository--failed .widget__header:before {
+  themify: background-color failure-color;
+}
+.travis__repository--passed .widget__header:before {
+  themify: background-color success-color;
+}
+.travis__repository__description {
+  margin 10px 15px;
+}

@@ -1,6 +1,6 @@
 {
   "name": "mozaik-ext-travis",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.0",
   "description": "Mozaik travis widgets",
   "repository": {
     "type": "git",

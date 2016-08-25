@@ -20,7 +20,9 @@ class BuildHistory extends Component {
         return (
             <div>
                 <div className="widget__header">
-                    <span className="widget__header__subject">{owner}/{repository}</span> build history
+                    <span>
+                        <span className="widget__header__subject">{owner}/{repository}</span> build history
+                    </span>
                     <i className="fa fa-bug" />
                 </div>
                 <div className="widget__body">

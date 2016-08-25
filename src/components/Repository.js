@@ -51,11 +51,13 @@ class Repository extends Component {
         return (
             <div className={cssClasses}>
                 <div className="widget__header">
-                    <span className="travis__repository__slug">
-                        <span className="widget__header__subject">{repository ? repository.slug : ''}</span>
-                    </span>
-                    <span className="widget__header__count">
-                        {repository ? `#${repository.last_build_number}` : ''}
+                    <span>
+                        <span className="travis__repository__slug">
+                            <span className="widget__header__subject">{repository ? repository.slug : ''}</span>
+                        </span>
+                        <span className="widget__header__count">
+                            {repository ? `#${repository.last_build_number}` : ''}
+                        </span>
                     </span>
                     <i className="fa fa-bug" />
                 </div>

@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import _                               from 'lodash'
-import Mozaik                          from 'mozaik/ui'
+import { BarChart }                    from 'mozaik/ui'
 import { BuildPropType }               from './BuildHistoryItem'
-const { BarChart }                     = Mozaik
 
 
 class BuildHistogram extends Component {

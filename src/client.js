@@ -1,7 +1,6 @@
-const Promise = require('bluebird')
-const Travis  = require('travis-ci')
-const _       = require('lodash')
-const chalk   = require('chalk')
+const Travis = require('travis-ci')
+const _      = require('lodash')
+const chalk  = require('chalk')
 
 
 /**
@@ -10,7 +9,7 @@ const chalk   = require('chalk')
  */
 const client = mozaik => {
     const travis = new Travis({
-        version: '2.0.0'
+        version: '2.0.0',
     })
 
     return {
@@ -23,19 +22,15 @@ const client = mozaik => {
          * @returns {Promise}
          */
         repository({ owner, repository }) {
-            const def = Promise.defer()
+            return new Promise((resolve, reject) => {
+                mozaik.logger.info(chalk.yellow(`[travis] calling repository: ${owner}/${repository}`))
 
-            mozaik.logger.info(chalk.yellow(`[travis] calling repository: ${owner}/${repository}`))
+                travis.repos(owner, repository).get((err, res) => {
+                    if (err) return reject(err)
 
-            travis.repos(owner, repository).get((err, res) => {
-                if (err) {
-                    def.reject(err)
-                }
-
-                def.resolve(res.repo)
+                    resolve(res.repo)
+                })
             })
-
-            return def.promise
         },
 
         /**
@@ -47,26 +42,22 @@ const client = mozaik => {
          * @returns {Promise}
          */
         buildHistory({ owner, repository }) {
-            const def = Promise.defer()
+            return new Promise((resolve, reject) => {
+                mozaik.logger.info(chalk.yellow(`[travis] calling buildHistory: ${owner}/${repository}`))
 
-            mozaik.logger.info(chalk.yellow(`[travis] calling buildHistory: ${owner}/${repository}`))
+                travis.repos(owner, repository).builds.get((err, res) => {
+                    if (err) return reject(err)
 
-            travis.repos(owner, repository).builds.get((err, res) => {
-                if (err) {
-                    def.reject(err)
-                }
+                    res.builds.forEach(build => {
+                        const commit = _.find(res.commits, { id: build.commit_id })
+                        if (commit) {
+                            build.commit = commit
+                        }
+                    })
 
-                res.builds.forEach(build => {
-                    const commit = _.find(res.commits, { id: build.commit_id })
-                    if (commit) {
-                        build.commit = commit
-                    }
+                    resolve(res.builds)
                 })
-
-                def.resolve(res.builds)
             })
-
-            return def.promise
         }
     }
 }

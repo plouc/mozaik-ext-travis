@@ -26,9 +26,8 @@
     "dashboard"
   ],
   "dependencies": {
-    "bluebird": "3.4.1",
     "chalk": "1.1.3",
-    "travis-ci": "2.1.0",
+    "travis-ci": "2.1.1",
     "lodash": "4.15.0",
     "moment": "2.14.1"
   },

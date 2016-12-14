@@ -1,5 +1,6 @@
 import React, { Component, PropTypes }     from 'react'
 import BuildHistoryItem, { BuildPropType } from './BuildHistoryItem'
+import { TrapApiError }                    from 'mozaik/ui'
 
 
 class BuildHistory extends Component {
@@ -11,11 +12,7 @@ class BuildHistory extends Component {
     }
 
     render() {
-        const { owner, repository, apiData: builds } = this.props
-
-        const buildNodes = builds.map(build => (
-            <BuildHistoryItem key={build.id} build={build} />
-        ))
+        const { owner, repository, apiData: builds, apiError } = this.props
 
         return (
             <div>
@@ -26,7 +23,13 @@ class BuildHistory extends Component {
                     <i className="fa fa-bug" />
                 </div>
                 <div className="widget__body">
-                    {buildNodes}
+                    <TrapApiError error={apiError}>
+                        <div>
+                            {builds.map(build => (
+                                <BuildHistoryItem key={build.id} build={build} />
+                            ))}
+                        </div>
+                    </TrapApiError>
                 </div>
             </div>
         )
@@ -37,6 +40,7 @@ BuildHistory.propTypes = {
     owner:      PropTypes.string.isRequired,
     repository: PropTypes.string.isRequired,
     apiData:    PropTypes.arrayOf(BuildPropType),
+    apiError:   PropTypes.object,
 }
 
 BuildHistory.defaultProps = {

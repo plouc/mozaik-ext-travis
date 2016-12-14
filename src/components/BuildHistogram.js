@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import _                               from 'lodash'
-import { BarChart }                    from 'mozaik/ui'
+import { BarChart, TrapApiError }      from 'mozaik/ui'
 import { BuildPropType }               from './BuildHistoryItem'
 
 
@@ -13,7 +13,7 @@ class BuildHistogram extends Component {
     }
 
     render() {
-        let { owner, repository, apiData: builds } = this.props
+        let { owner, repository, apiData: builds, apiError } = this.props
 
         builds = _.clone(builds).reverse()
 
@@ -45,7 +45,9 @@ class BuildHistogram extends Component {
                     <i className="fa fa-bug" />
                 </div>
                 <div className="widget__body">
-                    <BarChart data={[{ data: data }]} options={barChartOptions}/>
+                    <TrapApiError error={apiError}>
+                        <BarChart data={[{ data: data }]} options={barChartOptions}/>
+                    </TrapApiError>
                 </div>
             </div>
         )
@@ -56,6 +58,7 @@ BuildHistogram.propTypes = {
     owner:      PropTypes.string.isRequired,
     repository: PropTypes.string.isRequired,
     apiData:    PropTypes.arrayOf(BuildPropType),
+    apiError:   PropTypes.object,
 }
 
 BuildHistogram.defaultProps = {

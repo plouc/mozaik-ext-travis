@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import moment                          from 'moment'
+import { TrapApiError }                from 'mozaik/ui'
 
 
 class Repository extends Component {
@@ -11,10 +12,10 @@ class Repository extends Component {
     }
 
     render() {
-        const { apiData: repository } = this.props
+        const { apiData: repository, apiError } = this.props
 
         let cssClasses = ''
-        let infoNode   = null
+        let infoNode   = <div />
 
         if (repository) {
             let statusClass = ''
@@ -62,7 +63,9 @@ class Repository extends Component {
                     <i className="fa fa-bug" />
                 </div>
                 <div className="widget__body">
-                    {infoNode}
+                    <TrapApiError error={apiError}>
+                        {infoNode}
+                    </TrapApiError>
                 </div>
             </div>
         )
@@ -72,6 +75,7 @@ class Repository extends Component {
 Repository.propTypes = {
     owner:      PropTypes.string.isRequired,
     repository: PropTypes.string.isRequired,
+    apiError:   PropTypes.object,
     apiData:    PropTypes.shape({
         last_build_number:     PropTypes.string,
         last_build_state:      PropTypes.string,

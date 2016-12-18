@@ -1,7 +1,39 @@
 import React, { Component, PropTypes } from 'react'
 import moment                          from 'moment'
-import { TrapApiError }                from 'mozaik/ui'
+import {
+    TrapApiError,
+    WidgetHeader,
+    WidgetBody,
+} from 'mozaik/ui'
 
+
+/*
+.travis__repository .widget__header {
+  padding-left: 35px;
+}
+.travis__repository .widget__header:before {
+  content " ";
+  display block;
+  width  16px;
+  height 16px;
+  position absolute;
+  themify: top @(c) { return (c.widget-header-height - 16px) / 2 };
+  left 12px;
+  themify: border @(c) { return 2px solid c.widget-bg-color };
+  border-radius 100%;
+  themify: background-color color-unknown;
+}
+.travis__repository--errored .widget__header:before,
+.travis__repository--failed .widget__header:before {
+  themify: background-color failure-color;
+}
+.travis__repository--passed .widget__header:before {
+  themify: background-color success-color;
+}
+.travis__repository__description {
+  margin 10px 15px;
+}
+*/
 
 class Repository extends Component {
     static getApiRequest({ owner, repository }) {
@@ -51,22 +83,17 @@ class Repository extends Component {
 
         return (
             <div className={cssClasses}>
-                <div className="widget__header">
-                    <span>
-                        <span className="travis__repository__slug">
-                            <span className="widget__header__subject">{repository ? repository.slug : ''}</span>
-                        </span>
-                        <span className="widget__header__count">
-                            {repository ? `#${repository.last_build_number}` : ''}
-                        </span>
-                    </span>
-                    <i className="fa fa-bug" />
-                </div>
-                <div className="widget__body">
+                <WidgetHeader
+                    title=""
+                    subject={repository ? repository.slug : ''}
+                    count={repository ? `#${repository.last_build_number}` : ''}
+                    icon="bug"
+                />
+                <WidgetBody>
                     <TrapApiError error={apiError}>
                         {infoNode}
                     </TrapApiError>
-                </div>
+                </WidgetBody>
             </div>
         )
     }

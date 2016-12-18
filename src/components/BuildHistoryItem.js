@@ -1,28 +1,32 @@
 import React, { Component, PropTypes } from 'react'
 import moment                          from 'moment'
+import {
+    WidgetListItem,
+    WidgetStatusChip,
+} from 'mozaik/ui'
 
 
 class BuildHistoryItem extends Component {
     render() {
         const { build } = this.props
 
-        let commitNode = null
-        if (build.commit) {
-            commitNode = (
-                <span className="travis__build-history__item__message">{build.commit.message}</span>
-            )
-        }
-
-        const cssClasses = `list__item list__item--with-status travis__build-history__item travis__build-history__item--${build.state}`
-
         return (
-            <div className={cssClasses}>
-                #{build.number} {commitNode}<br />
-                <time className="list__item__time">
-                    <i className="fa fa-clock-o" />&nbsp;
-                    {moment(build.finished_at).fromNow()}
-                </time>
-            </div>
+            <WidgetListItem
+                title={
+                    <span>#{build.number} {build.commit ? build.commit.message : null}</span>
+                }
+                meta={
+                    <span>
+                        <i className="fa fa-clock-o" />&nbsp;
+                        {moment(build.finished_at).fromNow()}
+                    </span>
+                }
+                pre={
+                    <WidgetStatusChip
+                        status={build.state}
+                    />
+                }
+            />
         )
     }
 }

@@ -34,14 +34,14 @@ key          | required | description
 dashboards:
 - # …
   widgets:
-  - type:       travis.repository
+  - extension:  travis
+    widget:     Repository
     owner:      plouc
     repository: mozaik
     columns:    1
     rows:       1
     x:          0
     y:          0
-
 ```
 
 
@@ -65,7 +65,8 @@ key          | required | description
 dashboards:
 - # …
   widgets:
-  - type:       travis.build_history
+  - extension:  travis
+    widget:     BuildHistory
     owner:      plouc
     repository: mozaik
     columns:    1
@@ -95,7 +96,8 @@ key          | required | description
 dashboards:
 - # …
   widgets:
-  - type:       travis.build_histogram
+  - extension:  travis
+    widget:     BuildHistogram
     owner:      plouc
     repository: mozaik
     columns:    1

@@ -1,6 +1,10 @@
 import React, { Component, PropTypes }     from 'react'
 import BuildHistoryItem, { BuildPropType } from './BuildHistoryItem'
-import { TrapApiError }                    from 'mozaik/ui'
+import {
+    TrapApiError,
+    WidgetHeader,
+    WidgetBody,
+} from 'mozaik/ui'
 
 
 class BuildHistory extends Component {
@@ -16,13 +20,12 @@ class BuildHistory extends Component {
 
         return (
             <div>
-                <div className="widget__header">
-                    <span>
-                        <span className="widget__header__subject">{owner}/{repository}</span> build history
-                    </span>
-                    <i className="fa fa-bug" />
-                </div>
-                <div className="widget__body">
+                <WidgetHeader
+                    title="build history"
+                    subject={`${owner}/${repository}`}
+                    icon="bug"
+                />
+                <WidgetBody>
                     <TrapApiError error={apiError}>
                         <div>
                             {builds.map(build => (
@@ -30,7 +33,7 @@ class BuildHistory extends Component {
                             ))}
                         </div>
                     </TrapApiError>
-                </div>
+                </WidgetBody>
             </div>
         )
     }

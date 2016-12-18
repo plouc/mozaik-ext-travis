@@ -1,10 +1,35 @@
 import React, { Component, PropTypes } from 'react'
 import _                               from 'lodash'
-import { BarChart, TrapApiError }      from 'mozaik/ui'
 import { BuildPropType }               from './BuildHistoryItem'
+import {
+    TrapApiError,
+    WidgetHeader,
+    WidgetBody,
+} from 'mozaik/ui'
+import {
+    ResponsiveChart as Chart,
+    Scale,
+    Axis,
+    Grid,
+    Bars,
+} from 'nivo'
 
 
-class BuildHistogram extends Component {
+const margin = { top: 20, right: 20, bottom: 40, left: 40 }
+
+
+export default class BuildHistogram extends Component {
+    static propTypes = {
+        owner:      PropTypes.string.isRequired,
+        repository: PropTypes.string.isRequired,
+        apiData:    PropTypes.arrayOf(BuildPropType),
+        apiError:   PropTypes.object,
+    }
+
+    static contextTypes = {
+        theme: PropTypes.object.isRequired,
+    }
+
     static getApiRequest({ owner, repository }) {
         return {
             id:     `travis.buildHistory.${ owner }.${ repository }`,
@@ -13,57 +38,44 @@ class BuildHistogram extends Component {
     }
 
     render() {
-        let { owner, repository, apiData: builds, apiError } = this.props
+        const { owner, repository, apiData: _builds, apiError } = this.props
+        const { theme }                                         = this.context
 
-        builds = _.clone(builds).reverse()
+        let body = null
+        if (_builds) {
+            const data = _.clone(_builds).reverse().map(build => {
+                return {
+                    id:       build.number,
+                    duration: build.duration / 60, // converts s to mn
+                    state:    build.state,
+                }
+            })
 
-        // converts to format required by BarChart component
-        let data = builds.map(build => {
-            return {
-                x:     build.number,
-                y:     build.duration / 60, // converts s to mn
-                state: build.state
-            }
-        })
-
-        let barChartOptions = {
-            mode:            'stacked',
-            xLegend:         'build number',
-            xLegendPosition: 'right',
-            yLegend:         'duration (minutes)',
-            yLegendPosition: 'top',
-            xPadding:        0.3,
-            barClass:        function (d) { return `result--${ d.state }` }
+            body =(
+                <Chart margin={margin} data={data} theme={theme.charts}>
+                    <Scale id="duration" type="linear" dataKey="duration" axis="y"/>
+                    <Scale id="id" type="band" dataKey="id" axis="x" padding={0.3}/>
+                    <Grid yScale="duration"/>
+                    <Axis scaleId="id" position="bottom" axis="x"/>
+                    <Axis scaleId="duration" position="left" axis="y"/>
+                    <Bars xScale="id" x="id" yScale="duration" y="duration" color="#fff"/>
+                </Chart>
+            )
         }
 
         return (
             <div>
-                <div className="widget__header">
-                    <span>
-                        <span className="widget__header__subject">{owner}/{repository}</span> build histogram
-                    </span>
-                    <i className="fa fa-bug" />
-                </div>
-                <div className="widget__body">
+                <WidgetHeader
+                    title="build histogram"
+                    subject={`${owner}/${repository}`}
+                    icon="bug"
+                />
+                <WidgetBody style={{ overflowY: 'hidden' }}>
                     <TrapApiError error={apiError}>
-                        <BarChart data={[{ data: data }]} options={barChartOptions}/>
+                        {body}
                     </TrapApiError>
-                </div>
+                </WidgetBody>
             </div>
         )
     }
 }
-
-BuildHistogram.propTypes = {
-    owner:      PropTypes.string.isRequired,
-    repository: PropTypes.string.isRequired,
-    apiData:    PropTypes.arrayOf(BuildPropType),
-    apiError:   PropTypes.object,
-}
-
-BuildHistogram.defaultProps = {
-    apiData: [],
-}
-
-
-export default BuildHistogram

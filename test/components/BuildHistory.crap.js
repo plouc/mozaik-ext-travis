@@ -40,11 +40,11 @@ const sampleBuilds     = [
     }
 ]
 
-test('should return correct api request', t => {
-    t.deepEqual(BuildHistory.getApiRequest({
+test('should return correct api request', () => {
+    expect(BuildHistory.getApiRequest({
         owner:      sampleOwner,
         repository: sampleRepository,
-    }), {
+    })).toEqual({
         id:     `travis.buildHistory.${sampleOwner}.${sampleRepository}`,
         params: {
             owner:      sampleOwner,

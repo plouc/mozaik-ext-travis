@@ -15,7 +15,7 @@ import {
 } from 'nivo'
 
 
-const margin = { top: 20, right: 20, bottom: 40, left: 40 }
+const margin = { top: 20, right: 20, bottom: 60, left: 70 }
 
 
 export default class BuildHistogram extends Component {
@@ -56,8 +56,24 @@ export default class BuildHistogram extends Component {
                     <Scale id="duration" type="linear" dataKey="duration" axis="y"/>
                     <Scale id="id" type="band" dataKey="id" axis="x" padding={0.3}/>
                     <Grid yScale="duration"/>
-                    <Axis scaleId="id" position="bottom" axis="x"/>
-                    <Axis scaleId="duration" position="left" axis="y"/>
+                    <Axis
+                        scaleId="duration"
+                        position="left"
+                        tickSize={0}
+                        tickPadding={7}
+                        legend="duration (mn)"
+                        legendPosition="center"
+                        legendOffset={-40}
+                    />
+                    <Axis
+                        scaleId="id"
+                        position="bottom"
+                        tickSize={0}
+                        tickPadding={7}
+                        legend="build number"
+                        legendPosition="center"
+                        legendOffset={40}
+                    />
                     <Bars xScale="id" x="id" yScale="duration" y="duration" color="#fff"/>
                 </Chart>
             )

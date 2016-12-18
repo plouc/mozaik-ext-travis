@@ -2,40 +2,32 @@ import React, { Component, PropTypes } from 'react'
 import moment                          from 'moment'
 import {
     TrapApiError,
-    WidgetHeader,
-    WidgetBody,
+    WidgetHeader as Header,
+    WidgetBody as Body,
+    WidgetLabel as Label,
 } from 'mozaik/ui'
 
 
-/*
-.travis__repository .widget__header {
-  padding-left: 35px;
-}
-.travis__repository .widget__header:before {
-  content " ";
-  display block;
-  width  16px;
-  height 16px;
-  position absolute;
-  themify: top @(c) { return (c.widget-header-height - 16px) / 2 };
-  left 12px;
-  themify: border @(c) { return 2px solid c.widget-bg-color };
-  border-radius 100%;
-  themify: background-color color-unknown;
-}
-.travis__repository--errored .widget__header:before,
-.travis__repository--failed .widget__header:before {
-  themify: background-color failure-color;
-}
-.travis__repository--passed .widget__header:before {
-  themify: background-color success-color;
-}
-.travis__repository__description {
-  margin 10px 15px;
-}
-*/
+export default class Repository extends Component {
+    static propTypes = {
+        owner:      PropTypes.string.isRequired,
+        repository: PropTypes.string.isRequired,
+        apiError:   PropTypes.object,
+        apiData:    PropTypes.shape({
+            last_build_number:     PropTypes.string,
+            last_build_state:      PropTypes.string,
+            last_build_started_at: PropTypes.string,
+            last_build_duration:   PropTypes.number,
+            slug:                  PropTypes.string.isRequired,
+            description:           PropTypes.string.isRequired,
+            github_language:       PropTypes.string,
+        }),
+    }
 
-class Repository extends Component {
+    static contextTypes = {
+        theme: PropTypes.object.isRequired,
+    }
+
     static getApiRequest({ owner, repository }) {
         return {
             id:     `travis.repository.${ owner }.${ repository }`,
@@ -45,74 +37,80 @@ class Repository extends Component {
 
     render() {
         const { apiData: repository, apiError } = this.props
+        const { theme }                         = this.context
 
-        let cssClasses = ''
+
         let infoNode   = <div />
-
         if (repository) {
-            let statusClass = ''
+            let icon  = 'question'
+            let color = theme.colors.unknown
             if (repository.last_build_state === 'passed') {
-                statusClass = 'fa fa-check txt--success'
+                icon = 'check'
+                color = theme.colors.success
             } else if (repository.last_build_state === 'started') {
-                statusClass = 'fa fa-play-circle-o'
+                icon = 'play'
+            } else if (repository.last_build_state === 'failed') {
+                icon  = 'warning'
+                color = theme.colors.failure
+            }
+
+            const wrapperStyle = {
+                display:       'flex',
+                flexDirection: 'column',
             }
 
             infoNode = (
-                <div>
-                    <div className="travis__repository__description">{repository.description}</div>
-                    <ul className="list list--compact">
-                        <li className="list__item">
-                            <i className={statusClass} /> last build&nbsp;
-                            <span className="prop__value">{repository.last_build_state}</span>
-                        </li>
-                        <li className="list__item">
-                            <i className="fa fa-clock-o" />&nbsp;
-                            last build <span className="prop__value">{moment(repository.last_build_started_at).fromNow()}</span>&nbsp;
-                            in <span className="count">{repository.last_build_duration}s</span>
-                        </li>
-                        <li className="list__item">
-                            <i className="fa fa-code" /> language:&nbsp;
-                            <span className="prop__value">{repository.github_language ? repository.github_language : 'n/a'}</span>
-                        </li>
-                    </ul>
+                <div style={{ margin: '1.2vmin 1.8vmin' }}>
+                    <div style={{ marginBottom: '2vmin' }}>
+                        {repository.description}
+                    </div>
+                    <div style={wrapperStyle}>
+                        <Label
+                            label="last build"
+                            prefix={<i className={`fa fa-${icon}`} style={{ color }}/>}
+                            style={{ marginBottom: '2vmin' }}
+                        />
+                        <Label
+                            label={
+                                <span>
+                                    last build&nbsp;
+                                    <span className="prop__value">
+                                        {moment(repository.last_build_started_at).fromNow()}
+                                    </span>
+                                </span>
+                            }
+                            prefix={<i className="fa fa-clock-o" />}
+                            suffix={
+                                <span>
+                                    in <span className="count">{repository.last_build_duration}s</span>
+                                </span>
+                            }
+                            style={{ marginBottom: '2vmin' }}
+                        />
+                        <Label
+                            label="language"
+                            prefix={<i className="fa fa-code" />}
+                            suffix={repository.github_language ? repository.github_language : 'n/a'}
+                        />
+                    </div>
                 </div>
             )
-
-            cssClasses = `travis__repository--${repository.last_build_state}`
         }
 
         return (
-            <div className={cssClasses}>
-                <WidgetHeader
+            <div>
+                <Header
                     title=""
                     subject={repository ? repository.slug : ''}
                     count={repository ? `#${repository.last_build_number}` : ''}
                     icon="bug"
                 />
-                <WidgetBody>
+                <Body>
                     <TrapApiError error={apiError}>
                         {infoNode}
                     </TrapApiError>
-                </WidgetBody>
+                </Body>
             </div>
         )
     }
 }
-
-Repository.propTypes = {
-    owner:      PropTypes.string.isRequired,
-    repository: PropTypes.string.isRequired,
-    apiError:   PropTypes.object,
-    apiData:    PropTypes.shape({
-        last_build_number:     PropTypes.string,
-        last_build_state:      PropTypes.string,
-        last_build_started_at: PropTypes.string,
-        last_build_duration:   PropTypes.number,
-        slug:                  PropTypes.string.isRequired,
-        description:           PropTypes.string.isRequired,
-        github_language:       PropTypes.string,
-    }),
-}
-
-
-export default Repository

@@ -55,7 +55,7 @@ const client = mozaik => {
                         }
                     })
 
-                    resolve(res.builds)
+                    resolve({ builds: res.builds })
                 })
             })
         }

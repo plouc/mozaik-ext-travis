@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react'
-import _                               from 'lodash'
 import { BuildPropType }               from './BuildHistoryItem'
 import {
     TrapApiError,
+    Widget,
     WidgetHeader,
     WidgetBody,
+    WidgetLoader,
 } from 'mozaik/ui'
 import {
     ResponsiveChart as Chart,
@@ -22,7 +23,9 @@ export default class BuildHistogram extends Component {
     static propTypes = {
         owner:      PropTypes.string.isRequired,
         repository: PropTypes.string.isRequired,
-        apiData:    PropTypes.arrayOf(BuildPropType),
+        apiData:    PropTypes.shape({
+            builds: PropTypes.arrayOf(BuildPropType).isRequired,
+        }),
         apiError:   PropTypes.object,
     }
 
@@ -38,18 +41,18 @@ export default class BuildHistogram extends Component {
     }
 
     render() {
-        const { owner, repository, apiData: _builds, apiError } = this.props
-        const { theme }                                         = this.context
+        const { owner, repository, apiData, apiError } = this.props
+        const { theme }                                = this.context
 
-        let body = null
-        if (_builds) {
-            const data = _.clone(_builds).reverse().map(build => {
+        let body = <WidgetLoader />
+        if (apiData) {
+            const data = apiData.builds.map(build => {
                 return {
                     id:       build.number,
                     duration: build.duration / 60, // converts s to mn
                     state:    build.state,
                 }
-            })
+            }).reverse()
 
             body =(
                 <Chart margin={margin} data={data} theme={theme.charts}>
@@ -80,7 +83,7 @@ export default class BuildHistogram extends Component {
         }
 
         return (
-            <div>
+            <Widget>
                 <WidgetHeader
                     title="build histogram"
                     subject={`${owner}/${repository}`}
@@ -91,7 +94,7 @@ export default class BuildHistogram extends Component {
                         {body}
                     </TrapApiError>
                 </WidgetBody>
-            </div>
+            </Widget>
         )
     }
 }

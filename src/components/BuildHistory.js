@@ -2,12 +2,23 @@ import React, { Component, PropTypes }     from 'react'
 import BuildHistoryItem, { BuildPropType } from './BuildHistoryItem'
 import {
     TrapApiError,
+    Widget,
     WidgetHeader,
     WidgetBody,
+    WidgetLoader,
 } from 'mozaik/ui'
 
 
-class BuildHistory extends Component {
+export default class BuildHistory extends Component {
+    static propTypes = {
+        owner:      PropTypes.string.isRequired,
+        repository: PropTypes.string.isRequired,
+        apiData:    PropTypes.shape({
+            builds: PropTypes.arrayOf(BuildPropType).isRequired,
+        }),
+        apiError:   PropTypes.object,
+    }
+
     static getApiRequest({ owner, repository }) {
         return {
             id:     `travis.buildHistory.${owner}.${repository}`,
@@ -16,10 +27,21 @@ class BuildHistory extends Component {
     }
 
     render() {
-        const { owner, repository, apiData: builds, apiError } = this.props
+        const { owner, repository, apiData, apiError } = this.props
+
+        let body = <WidgetLoader />
+        if (apiData) {
+            body = (
+                <div>
+                    {apiData.builds.map(build => (
+                        <BuildHistoryItem key={build.id} build={build} />
+                    ))}
+                </div>
+            )
+        }
 
         return (
-            <div>
+            <Widget>
                 <WidgetHeader
                     title="build history"
                     subject={`${owner}/${repository}`}
@@ -27,28 +49,10 @@ class BuildHistory extends Component {
                 />
                 <WidgetBody>
                     <TrapApiError error={apiError}>
-                        <div>
-                            {builds.map(build => (
-                                <BuildHistoryItem key={build.id} build={build} />
-                            ))}
-                        </div>
+                        {body}
                     </TrapApiError>
                 </WidgetBody>
-            </div>
+            </Widget>
         )
     }
 }
-
-BuildHistory.propTypes = {
-    owner:      PropTypes.string.isRequired,
-    repository: PropTypes.string.isRequired,
-    apiData:    PropTypes.arrayOf(BuildPropType),
-    apiError:   PropTypes.object,
-}
-
-BuildHistory.defaultProps = {
-    apiData: [],
-}
-
-
-export default BuildHistory

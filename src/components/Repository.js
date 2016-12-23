@@ -2,8 +2,10 @@ import React, { Component, PropTypes } from 'react'
 import moment                          from 'moment'
 import {
     TrapApiError,
-    WidgetHeader as Header,
-    WidgetBody as Body,
+    Widget,
+    WidgetHeader,
+    WidgetBody,
+    WidgetLoader,
     WidgetLabel as Label,
 } from 'mozaik/ui'
 
@@ -39,8 +41,7 @@ export default class Repository extends Component {
         const { apiData: repository, apiError } = this.props
         const { theme }                         = this.context
 
-
-        let infoNode   = <div />
+        let body = <WidgetLoader />
         if (repository) {
             let icon  = 'question'
             let color = theme.colors.unknown
@@ -59,7 +60,7 @@ export default class Repository extends Component {
                 flexDirection: 'column',
             }
 
-            infoNode = (
+            body = (
                 <div style={{ margin: '1.2vmin 1.8vmin' }}>
                     <div style={{ marginBottom: '2vmin' }}>
                         {repository.description}
@@ -98,19 +99,19 @@ export default class Repository extends Component {
         }
 
         return (
-            <div>
-                <Header
+            <Widget>
+                <WidgetHeader
                     title=""
                     subject={repository ? repository.slug : ''}
                     count={repository ? `#${repository.last_build_number}` : ''}
                     icon="bug"
                 />
-                <Body>
+                <WidgetBody>
                     <TrapApiError error={apiError}>
-                        {infoNode}
+                        {body}
                     </TrapApiError>
-                </Body>
-            </div>
+                </WidgetBody>
+            </Widget>
         )
     }
 }

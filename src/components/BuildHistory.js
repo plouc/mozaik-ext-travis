@@ -13,6 +13,7 @@ export default class BuildHistory extends Component {
     static propTypes = {
         owner:      PropTypes.string.isRequired,
         repository: PropTypes.string.isRequired,
+        title:      PropTypes.string,
         apiData:    PropTypes.shape({
             builds: PropTypes.arrayOf(BuildPropType).isRequired,
         }),
@@ -27,7 +28,7 @@ export default class BuildHistory extends Component {
     }
 
     render() {
-        const { owner, repository, apiData, apiError } = this.props
+        const { owner, repository, title, apiData, apiError } = this.props
 
         let body = <WidgetLoader />
         if (apiData) {
@@ -43,8 +44,8 @@ export default class BuildHistory extends Component {
         return (
             <Widget>
                 <WidgetHeader
-                    title="build history"
-                    subject={`${owner}/${repository}`}
+                    title={title || 'Builds'}
+                    subject={title ? null : `${owner}/${repository}`}
                     icon="bug"
                 />
                 <WidgetBody>

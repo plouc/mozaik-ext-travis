@@ -2,6 +2,10 @@ import test        from 'ava'
 import React       from 'react'
 import { shallow } from 'enzyme'
 import Repository  from '../../src/components/Repository'
+import {
+    WidgetLoader,
+    WidgetHeader,
+} from 'mozaik/ui'
 
 
 const sampleOwner      = 'plouc'
@@ -20,15 +24,50 @@ test('should return correct api request', t => {
     })
 })
 
+test('should display loader if no apiData available', t => {
+    const wrapper = shallow(
+        <Repository
+            owner={sampleOwner}
+            repository={sampleRepository}
+        />,
+        { context: { theme: {} } }
+    )
 
-test('should display empty node if apiData is empty', t => {
-    const wrapper = shallow(<Repository owner={sampleOwner} repository={sampleRepository}/>)
-
-    t.is(wrapper.find('.travis__repository__slug').text(), '')
-    t.is(wrapper.find('.widget__header__count').text(), '')
+    t.is(wrapper.find(WidgetLoader).length, 1)
 })
 
+test('should display owner/repo', t => {
+    const wrapper = shallow(
+        <Repository
+            owner={sampleOwner}
+            repository={sampleRepository}
+        />,
+        { context: { theme: {} } }
+    )
 
+    const header = wrapper.find(WidgetHeader)
+    t.is(header.length, 1)
+    t.is(header.prop('title'), '')
+    t.is(header.prop('subject'), `${sampleOwner}/${sampleRepository}`)
+})
+
+test('should allow title override', t => {
+    const wrapper = shallow(
+        <Repository
+            owner={sampleOwner}
+            repository={sampleRepository}
+            title="override"
+        />,
+        { context: { theme: {} } }
+    )
+
+    const header = wrapper.find(WidgetHeader)
+    t.is(header.length, 1)
+    t.is(header.prop('title'), 'override')
+    t.is(header.prop('subject'), null)
+})
+
+/*
 test('should display info if apiData is available', t => {
     const repository = {
         id:                     3637580,
@@ -61,3 +100,4 @@ test('should display info if apiData is available', t => {
     t.regex(infoItems.at(1).text(), new RegExp(`in ${repository.last_build_duration}s`))
     t.is(infoItems.at(2).text().trim(), `language: ${repository.github_language}`)
 })
+*/

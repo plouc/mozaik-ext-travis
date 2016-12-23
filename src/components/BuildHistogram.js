@@ -23,6 +23,7 @@ export default class BuildHistogram extends Component {
     static propTypes = {
         owner:      PropTypes.string.isRequired,
         repository: PropTypes.string.isRequired,
+        title:      PropTypes.string,
         apiData:    PropTypes.shape({
             builds: PropTypes.arrayOf(BuildPropType).isRequired,
         }),
@@ -41,8 +42,8 @@ export default class BuildHistogram extends Component {
     }
 
     render() {
-        const { owner, repository, apiData, apiError } = this.props
-        const { theme }                                = this.context
+        const { owner, repository, title, apiData, apiError } = this.props
+        const { theme } = this.context
 
         let body = <WidgetLoader />
         if (apiData) {
@@ -85,8 +86,8 @@ export default class BuildHistogram extends Component {
         return (
             <Widget>
                 <WidgetHeader
-                    title="build histogram"
-                    subject={`${owner}/${repository}`}
+                    title={title || 'Builds'}
+                    subject={title ? null : `${owner}/${repository}`}
                     icon="bug"
                 />
                 <WidgetBody style={{ overflowY: 'hidden' }}>

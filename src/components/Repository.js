@@ -14,6 +14,7 @@ export default class Repository extends Component {
     static propTypes = {
         owner:      PropTypes.string.isRequired,
         repository: PropTypes.string.isRequired,
+        title:      PropTypes.string,
         apiError:   PropTypes.object,
         apiData:    PropTypes.shape({
             last_build_number:     PropTypes.string,
@@ -38,19 +39,22 @@ export default class Repository extends Component {
     }
 
     render() {
-        const { apiData: repository, apiError } = this.props
-        const { theme }                         = this.context
+        const { owner, repository, title, apiData: repoInfo, apiError } = this.props
+        const { theme } = this.context
 
         let body = <WidgetLoader />
-        if (repository) {
+        let ref
+        if (repoInfo) {
+            ref = `#${repoInfo.last_build_number}`
+
             let icon  = 'question'
             let color = theme.colors.unknown
-            if (repository.last_build_state === 'passed') {
+            if (repoInfo.last_build_state === 'passed') {
                 icon = 'check'
                 color = theme.colors.success
-            } else if (repository.last_build_state === 'started') {
+            } else if (repoInfo.last_build_state === 'started') {
                 icon = 'play'
-            } else if (repository.last_build_state === 'failed') {
+            } else if (repoInfo.last_build_state === 'failed') {
                 icon  = 'warning'
                 color = theme.colors.failure
             }
@@ -63,7 +67,7 @@ export default class Repository extends Component {
             body = (
                 <div style={{ margin: '1.2vmin 1.8vmin' }}>
                     <div style={{ marginBottom: '2vmin' }}>
-                        {repository.description}
+                        {repoInfo.description}
                     </div>
                     <div style={wrapperStyle}>
                         <Label
@@ -76,14 +80,14 @@ export default class Repository extends Component {
                                 <span>
                                     last build&nbsp;
                                     <span className="prop__value">
-                                        {moment(repository.last_build_started_at).fromNow()}
+                                        {moment(repoInfo.last_build_started_at).fromNow()}
                                     </span>
                                 </span>
                             }
                             prefix={<i className="fa fa-clock-o" />}
                             suffix={
                                 <span>
-                                    in <span className="count">{repository.last_build_duration}s</span>
+                                    in <span className="count">{repoInfo.last_build_duration}s</span>
                                 </span>
                             }
                             style={{ marginBottom: '2vmin' }}
@@ -91,7 +95,7 @@ export default class Repository extends Component {
                         <Label
                             label="language"
                             prefix={<i className="fa fa-code" />}
-                            suffix={repository.github_language ? repository.github_language : 'n/a'}
+                            suffix={repoInfo.github_language ? repoInfo.github_language : 'n/a'}
                         />
                     </div>
                 </div>
@@ -101,9 +105,9 @@ export default class Repository extends Component {
         return (
             <Widget>
                 <WidgetHeader
-                    title=""
-                    subject={repository ? repository.slug : ''}
-                    count={repository ? `#${repository.last_build_number}` : ''}
+                    title={title || ''}
+                    subject={title ? null : `${owner}/${repository}`}
+                    count={ref}
                     icon="bug"
                 />
                 <WidgetBody>

@@ -29,14 +29,20 @@ key          | required | description
 
 #### usage
 
-```javascript
-{
-  type: 'travis.repository',
-  owner: 'plouc', repository: 'mozaik',
-  columns: 1, rows: 1, x: 0, y: 0
-}
+``` yaml
+# config.yml
+dashboards:
+- # …
+  widgets:
+  - extension:  travis
+    widget:     Repository
+    owner:      plouc
+    repository: mozaik
+    columns:    1
+    rows:       1
+    x:          0
+    y:          0
 ```
-
 
 
 ### Travis Build history
@@ -54,14 +60,20 @@ key          | required | description
 
 #### usage
 
-```javascript
-{
-  type: 'travis.build_history',
-  owner: 'plouc', repository: 'mozaik',
-  columns: 1, rows: 1, x: 0, y: 0
-}
+``` yaml
+# config.yml
+dashboards:
+- # …
+  widgets:
+  - extension:  travis
+    widget:     BuildHistory
+    owner:      plouc
+    repository: mozaik
+    columns:    1
+    rows:       1
+    x:          0
+    y:          0
 ```
-
 
 
 ### Travis Build histogram
@@ -79,12 +91,19 @@ key          | required | description
 
 #### usage
 
-```javascript
-{
-  type: 'travis.build_histogram',
-  owner: 'plouc', repository: 'mozaik',
-  columns: 1, rows: 1, x: 0, y: 0
-}
+``` yaml
+# config.yml
+dashboards:
+- # …
+  widgets:
+  - extension:  travis
+    widget:     BuildHistogram
+    owner:      plouc
+    repository: mozaik
+    columns:    1
+    rows:       1
+    x:          0
+    y:          0
 ```
 
 

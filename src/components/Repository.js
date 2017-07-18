@@ -2,6 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import RepositoryIcon from 'react-icons/lib/fa/bug'
+import ClockIcon from 'react-icons/lib/fa/clock-o'
+import LanguageIcon from 'react-icons/lib/fa/code'
+import QuestionIcon from 'react-icons/lib/fa/question'
+import PassedIcon from 'react-icons/lib/fa/check'
+import StartedIcon from 'react-icons/lib/fa/play'
+import FailedIcon from 'react-icons/lib/fa/exclamation-triangle'
+import { withTheme } from 'styled-components'
 import {
     TrapApiError,
     Widget,
@@ -11,7 +18,7 @@ import {
     WidgetLabel as Label,
 } from '@mozaik/ui'
 
-export default class Repository extends Component {
+class Repository extends Component {
     static propTypes = {
         owner: PropTypes.string.isRequired,
         repository: PropTypes.string.isRequired,
@@ -42,6 +49,7 @@ export default class Repository extends Component {
             title,
             apiData: repoInfo,
             apiError,
+            theme,
         } = this.props
 
         let body = <WidgetLoader />
@@ -49,16 +57,16 @@ export default class Repository extends Component {
         if (repoInfo) {
             ref = `#${repoInfo.last_build_number}`
 
-            let icon = 'question'
-            let color = '#F00' //theme.colors.unknown
+            let Icon = QuestionIcon
+            let color = theme.colors.unknown
             if (repoInfo.last_build_state === 'passed') {
-                icon = 'check'
-                //color = theme.colors.success
+                Icon = PassedIcon
+                color = theme.colors.success
             } else if (repoInfo.last_build_state === 'started') {
-                icon = 'play'
+                Icon = StartedIcon
             } else if (repoInfo.last_build_state === 'failed') {
-                icon = 'warning'
-                //color = theme.colors.failure
+                Icon = FailedIcon
+                color = theme.colors.failure
             }
 
             const wrapperStyle = {
@@ -74,12 +82,7 @@ export default class Repository extends Component {
                     <div style={wrapperStyle}>
                         <Label
                             label="last build"
-                            prefix={
-                                <i
-                                    className={`fa fa-${icon}`}
-                                    style={{ color }}
-                                />
-                            }
+                            prefix={<Icon style={{ color }}/>}
                             style={{ marginBottom: '2vmin' }}
                         />
                         <Label
@@ -93,7 +96,7 @@ export default class Repository extends Component {
                                     </span>
                                 </span>
                             }
-                            prefix={<i className="fa fa-clock-o" />}
+                            prefix={<ClockIcon />}
                             suffix={
                                 <span>
                                     in{' '}
@@ -106,7 +109,7 @@ export default class Repository extends Component {
                         />
                         <Label
                             label="language"
-                            prefix={<i className="fa fa-code" />}
+                            prefix={<LanguageIcon />}
                             suffix={
                                 repoInfo.github_language
                                     ? repoInfo.github_language
@@ -135,3 +138,5 @@ export default class Repository extends Component {
         )
     }
 }
+
+export default withTheme(Repository)

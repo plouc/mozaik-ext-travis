@@ -8,7 +8,7 @@ import {
     WidgetBody,
     WidgetLoader,
 } from '@mozaik/ui'
-import { ResponsiveChart as Chart, Scale, Axis, Grid, Bars } from 'nivo'
+import { ResponsiveBar } from 'nivo'
 import { BuildPropType } from './BuildHistoryItem'
 
 const margin = { top: 20, right: 20, bottom: 60, left: 70 }
@@ -22,9 +22,6 @@ export default class BuildHistogram extends Component {
             builds: PropTypes.arrayOf(BuildPropType).isRequired,
         }),
         apiError: PropTypes.object,
-    }
-
-    static contextTypes = {
         theme: PropTypes.object.isRequired,
     }
 
@@ -36,63 +33,50 @@ export default class BuildHistogram extends Component {
     }
 
     render() {
-        const { owner, repository, title, apiData, apiError } = this.props
-        const { theme } = this.context
+        const { owner, repository, title, apiData, apiError, theme } = this.props
+
+        const colorsMapping = {
+            failed: theme.colors.failure,
+            errored: theme.colors.success,
+            passed: theme.colors.success,
+            canceled: theme.colors.unknown,
+        }
 
         let body = <WidgetLoader />
         if (apiData) {
-            const data = apiData.builds
-                .map(build => {
-                    return {
-                        id: build.number,
-                        duration: build.duration / 60, // converts s to mn
-                        state: build.state,
-                    }
-                })
-                .reverse()
+            const chartData = [{
+                id: 'builds',
+                data: apiData.builds.map(build => ({
+                    x: build.number,
+                    y: build.duration / 60, // converts s to mn
+                    color: colorsMapping[build.state],
+                })).reverse()
+            }]
 
             body = (
-                <Chart margin={margin} data={data} theme={theme.charts}>
-                    <Scale
-                        id="duration"
-                        type="linear"
-                        dataKey="duration"
-                        axis="y"
-                    />
-                    <Scale
-                        id="id"
-                        type="band"
-                        dataKey="id"
-                        axis="x"
-                        padding={0.3}
-                    />
-                    <Grid yScale="duration" />
-                    <Axis
-                        scaleId="duration"
-                        position="left"
-                        tickSize={0}
-                        tickPadding={7}
-                        legend="duration (mn)"
-                        legendPosition="center"
-                        legendOffset={-40}
-                    />
-                    <Axis
-                        scaleId="id"
-                        position="bottom"
-                        tickSize={0}
-                        tickPadding={7}
-                        legend="build number"
-                        legendPosition="center"
-                        legendOffset={40}
-                    />
-                    <Bars
-                        xScale="id"
-                        x="id"
-                        yScale="duration"
-                        y="duration"
-                        color="#fff"
-                    />
-                </Chart>
+                <ResponsiveBar
+                    margin={margin}
+                    data={chartData}
+                    xPadding={0.3}
+                    theme={theme.charts}
+                    animate={false}
+                    axes={{
+                        left: {
+                            tickPadding: 7,
+                            tickSize: 0,
+                            legend: 'duration (mn)',
+                            legendPosition: 'center',
+                            legendOffset: -40,
+                        },
+                        bottom: {
+                            tickSize: 0,
+                            tickPadding: 7,
+                            legend: 'build number',
+                            legendPosition: 'center',
+                            legendOffset: 40,
+                        }
+                    }}
+                />
             )
         }
 

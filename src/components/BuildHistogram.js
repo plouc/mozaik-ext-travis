@@ -33,7 +33,14 @@ export default class BuildHistogram extends Component {
     }
 
     render() {
-        const { owner, repository, title, apiData, apiError, theme } = this.props
+        const {
+            owner,
+            repository,
+            title,
+            apiData,
+            apiError,
+            theme,
+        } = this.props
 
         const colorsMapping = {
             failed: theme.colors.failure,
@@ -44,14 +51,18 @@ export default class BuildHistogram extends Component {
 
         let body = <WidgetLoader />
         if (apiData) {
-            const chartData = [{
-                id: 'builds',
-                data: apiData.builds.map(build => ({
-                    x: build.number,
-                    y: build.duration / 60, // converts s to mn
-                    color: colorsMapping[build.state],
-                })).reverse()
-            }]
+            const chartData = [
+                {
+                    id: 'builds',
+                    data: apiData.builds
+                        .map(build => ({
+                            x: build.number,
+                            y: build.duration / 60, // converts s to mn
+                            color: colorsMapping[build.state],
+                        }))
+                        .reverse(),
+                },
+            ]
 
             body = (
                 <ResponsiveBar
@@ -74,7 +85,7 @@ export default class BuildHistogram extends Component {
                             legend: 'build number',
                             legendPosition: 'center',
                             legendOffset: 40,
-                        }
+                        },
                     }}
                 />
             )

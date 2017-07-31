@@ -34,7 +34,7 @@ class BuildHistoryItem extends Component {
                     <span
                         style={{
                             display: 'flex',
-                            alignItems: 'center'
+                            alignItems: 'center',
                         }}
                     >
                         <ClockIcon />&nbsp;

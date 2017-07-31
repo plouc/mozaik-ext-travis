@@ -82,7 +82,7 @@ class Repository extends Component {
                     <div style={wrapperStyle}>
                         <Label
                             label="last build"
-                            prefix={<Icon style={{ color }}/>}
+                            prefix={<Icon style={{ color }} />}
                             style={{ marginBottom: '2vmin' }}
                         />
                         <Label

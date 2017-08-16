@@ -1,6 +1,6 @@
 {
   "name": "@mozaik/ext-travis",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0-alpha.1",
   "description": "Mozaik travis widgets",
   "repository": {
     "type": "git",
@@ -38,8 +38,8 @@
     "travis-ci": "^2.1.1"
   },
   "devDependencies": {
-    "@mozaik/babel-preset": "^1.0.0-alpha.1",
-    "@mozaik/ui": "^2.0.0-alpha.7",
+    "@mozaik/babel-preset": "^1.0.0-alpha.6",
+    "@mozaik/ui": "^2.0.0-alpha.11",
     "ava": "0.17.0",
     "babel-cli": "^6.24.1",
     "coveralls": "^2.11.15",
@@ -52,7 +52,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.1.2",
-    "nivo": "^1.0.0-alpha.8",
+    "nivo": "^0.12.0",
     "nyc": "^10.0.0",
     "prettier": "^1.5.2",
     "react": "^15.6.1",
@@ -60,21 +60,24 @@
     "react-dom": "^15.6.1"
   },
   "peerDependencies": {
-    "@mozaik/ui": "^2.0.0-alpha.7",
-    "nivo": "^1.0.0-alpha.8",
+    "@mozaik/ui": "^2.0.0-alpha.11",
+    "nivo": "^0.12.0",
     "react": "^15.6.1"
   },
   "scripts": {
-    "eslint": "eslint ./src/** ./test/**",
+    "lint": "eslint ./src/** ./test/**",
     "test": "NODE_ENV=test ava --verbose",
     "test-cover": "NODE_ENV=test nyc ava --verbose",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "cover-report": "nyc report --reporter=lcov && open coverage/lcov-report/index.html",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
+    "build:commonjs:watch": "npm run build:commonjs -- --watch",
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
+    "build:es:watch": "npm run build:es -- --watch",
     "build": "npm run build:commonjs && npm run build:es",
-    "prepublish": "npm run build",
-    "format": "prettier --tab-width=4 --bracket-spacing --no-semi --trailing-comma es5 --single-quote --write 'src/**/*.js' 'client.js'"
+    "prepublishOnly": "npm run build",
+    "fmt": "prettier --print-width=100 --tab-width=4 --bracket-spacing --no-semi --trailing-comma es5 --single-quote --color --write \"{src,test}/**/*.js\" 'client.js'",
+    "fmt:check": "prettier --print-width=100 --tab-width=4 --bracket-spacing --no-semi --trailing-comma es5 --single-quote --list-different \"{src,test}/**/*.js\" 'client.js'"
   },
   "ava": {
     "files": [

@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import BuildsIcon from 'react-icons/lib/fa/bug'
-import {
-    TrapApiError,
-    Widget,
-    WidgetHeader,
-    WidgetBody,
-    WidgetLoader,
-} from '@mozaik/ui'
+import { TrapApiError, Widget, WidgetHeader, WidgetBody, WidgetLoader } from '@mozaik/ui'
 import { ResponsiveBar } from 'nivo'
 import { BuildPropType } from './BuildHistoryItem'
 
@@ -33,14 +27,7 @@ export default class BuildHistogram extends Component {
     }
 
     render() {
-        const {
-            owner,
-            repository,
-            title,
-            apiData,
-            apiError,
-            theme,
-        } = this.props
+        const { owner, repository, title, apiData, apiError, theme } = this.props
 
         const colorsMapping = {
             failed: theme.colors.failure,
@@ -57,7 +44,7 @@ export default class BuildHistogram extends Component {
                     data: apiData.builds
                         .map(build => ({
                             x: build.number,
-                            y: build.duration / 60, // converts s to mn
+                            y: Number((build.duration / 60).toFixed(2)), // converts s to mn
                             color: colorsMapping[build.state],
                         }))
                         .reverse(),
@@ -71,21 +58,21 @@ export default class BuildHistogram extends Component {
                     xPadding={0.3}
                     theme={theme.charts}
                     animate={false}
-                    axes={{
-                        left: {
-                            tickPadding: 7,
-                            tickSize: 0,
-                            legend: 'duration (mn)',
-                            legendPosition: 'center',
-                            legendOffset: -40,
-                        },
-                        bottom: {
-                            tickSize: 0,
-                            tickPadding: 7,
-                            legend: 'build number',
-                            legendPosition: 'center',
-                            legendOffset: 40,
-                        },
+                    colorBy={d => d.color}
+                    enableLabels={false}
+                    axisLeft={{
+                        tickPadding: 7,
+                        tickSize: 0,
+                        legend: 'duration (mn)',
+                        legendPosition: 'center',
+                        legendOffset: -40,
+                    }}
+                    axisBottom={{
+                        tickSize: 0,
+                        tickPadding: 7,
+                        legend: 'build number',
+                        legendPosition: 'center',
+                        legendOffset: 40,
                     }}
                 />
             )

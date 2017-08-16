@@ -26,8 +26,7 @@ class BuildHistoryItem extends Component {
             <WidgetListItem
                 title={
                     <span>
-                        #{build.number}{' '}
-                        {build.commit ? build.commit.message : null}
+                        #{build.number} {build.commit ? build.commit.message : null}
                     </span>
                 }
                 meta={

@@ -1,49 +1,40 @@
-import test        from 'ava'
-import React       from 'react'
+import test from 'ava'
+import React from 'react'
 import { shallow } from 'enzyme'
-import Repository  from '../../src/components/Repository'
-import {
-    WidgetLoader,
-    WidgetHeader,
-} from 'mozaik/ui'
+import Repository from '../../src/components/Repository'
+import { WidgetLoader, WidgetHeader } from 'mozaik/ui'
 
-
-const sampleOwner      = 'plouc'
+const sampleOwner = 'plouc'
 const sampleRepository = 'mozaik'
 
 test('should return correct api request', t => {
-    t.deepEqual(Repository.getApiRequest({
-        owner:      sampleOwner,
-        repository: sampleRepository,
-    }), {
-        id:     `travis.repository.${sampleOwner}.${sampleRepository}`,
-        params: {
-            owner:      sampleOwner,
-            repository: sampleRepository
+    t.deepEqual(
+        Repository.getApiRequest({
+            owner: sampleOwner,
+            repository: sampleRepository,
+        }),
+        {
+            id: `travis.repository.${sampleOwner}.${sampleRepository}`,
+            params: {
+                owner: sampleOwner,
+                repository: sampleRepository,
+            },
         }
-    })
+    )
 })
 
 test('should display loader if no apiData available', t => {
-    const wrapper = shallow(
-        <Repository
-            owner={sampleOwner}
-            repository={sampleRepository}
-        />,
-        { context: { theme: {} } }
-    )
+    const wrapper = shallow(<Repository owner={sampleOwner} repository={sampleRepository} />, {
+        context: { theme: {} },
+    })
 
     t.is(wrapper.find(WidgetLoader).length, 1)
 })
 
 test('should display owner/repo', t => {
-    const wrapper = shallow(
-        <Repository
-            owner={sampleOwner}
-            repository={sampleRepository}
-        />,
-        { context: { theme: {} } }
-    )
+    const wrapper = shallow(<Repository owner={sampleOwner} repository={sampleRepository} />, {
+        context: { theme: {} },
+    })
 
     const header = wrapper.find(WidgetHeader)
     t.is(header.length, 1)
@@ -53,11 +44,7 @@ test('should display owner/repo', t => {
 
 test('should allow title override', t => {
     const wrapper = shallow(
-        <Repository
-            owner={sampleOwner}
-            repository={sampleRepository}
-            title="override"
-        />,
+        <Repository owner={sampleOwner} repository={sampleRepository} title="override" />,
         { context: { theme: {} } }
     )
 

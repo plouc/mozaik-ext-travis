@@ -25,9 +25,7 @@ const client = mozaik => {
         repository({ owner, repository }) {
             return new Promise((resolve, reject) => {
                 mozaik.logger.info(
-                    chalk.yellow(
-                        `[travis] calling repository: ${owner}/${repository}`
-                    )
+                    chalk.yellow(`[travis] calling repository: ${owner}/${repository}`)
                 )
 
                 travis.repos(owner, repository).get((err, res) => {
@@ -49,9 +47,7 @@ const client = mozaik => {
         buildHistory({ owner, repository }) {
             return new Promise((resolve, reject) => {
                 mozaik.logger.info(
-                    chalk.yellow(
-                        `[travis] calling buildHistory: ${owner}/${repository}`
-                    )
+                    chalk.yellow(`[travis] calling buildHistory: ${owner}/${repository}`)
                 )
 
                 travis.repos(owner, repository).builds.get((err, res) => {

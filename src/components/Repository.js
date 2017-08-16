@@ -43,14 +43,7 @@ class Repository extends Component {
     }
 
     render() {
-        const {
-            owner,
-            repository,
-            title,
-            apiData: repoInfo,
-            apiError,
-            theme,
-        } = this.props
+        const { owner, repository, title, apiData: repoInfo, apiError, theme } = this.props
 
         let body = <WidgetLoader />
         let ref
@@ -90,9 +83,7 @@ class Repository extends Component {
                                 <span>
                                     last build&nbsp;
                                     <span className="prop__value">
-                                        {moment(
-                                            repoInfo.last_build_started_at
-                                        ).fromNow()}
+                                        {moment(repoInfo.last_build_started_at).fromNow()}
                                     </span>
                                 </span>
                             }
@@ -100,9 +91,7 @@ class Repository extends Component {
                             suffix={
                                 <span>
                                     in{' '}
-                                    <span className="count">
-                                        {repoInfo.last_build_duration}s
-                                    </span>
+                                    <span className="count">{repoInfo.last_build_duration}s</span>
                                 </span>
                             }
                             style={{ marginBottom: '2vmin' }}
@@ -110,11 +99,7 @@ class Repository extends Component {
                         <Label
                             label="language"
                             prefix={<LanguageIcon />}
-                            suffix={
-                                repoInfo.github_language
-                                    ? repoInfo.github_language
-                                    : 'n/a'
-                            }
+                            suffix={repoInfo.github_language ? repoInfo.github_language : 'n/a'}
                         />
                     </div>
                 </div>

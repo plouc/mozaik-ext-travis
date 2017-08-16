@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import BuildsIcon from 'react-icons/lib/fa/bug'
-import {
-    TrapApiError,
-    Widget,
-    WidgetHeader,
-    WidgetBody,
-    WidgetLoader,
-} from '@mozaik/ui'
+import { TrapApiError, Widget, WidgetHeader, WidgetBody, WidgetLoader } from '@mozaik/ui'
 import BuildHistoryItem, { BuildPropType } from './BuildHistoryItem'
 
 export default class BuildHistory extends Component {
@@ -35,9 +29,7 @@ export default class BuildHistory extends Component {
         if (apiData) {
             body = (
                 <div>
-                    {apiData.builds.map(build =>
-                        <BuildHistoryItem key={build.id} build={build} />
-                    )}
+                    {apiData.builds.map(build => <BuildHistoryItem key={build.id} build={build} />)}
                 </div>
             )
         }

@@ -13,7 +13,7 @@
 
 ## Demo
 
-You can see a live demo of the widgets [here](http://mozaik-travis.herokuapp.com/)
+You can see a live demo of the widgets [here](https://mozaik-ext-travis-v2.herokuapp.com/)
 
 ## Install
 

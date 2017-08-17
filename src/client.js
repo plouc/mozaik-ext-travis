@@ -1,7 +1,8 @@
-const Travis = require('travis-ci')
-const _      = require('lodash')
-const chalk  = require('chalk')
+'use strict'
 
+const Travis = require('travis-ci')
+const _ = require('lodash')
+const chalk = require('chalk')
 
 /**
  * @param {Mozaik} mozaik
@@ -23,7 +24,9 @@ const client = mozaik => {
          */
         repository({ owner, repository }) {
             return new Promise((resolve, reject) => {
-                mozaik.logger.info(chalk.yellow(`[travis] calling repository: ${owner}/${repository}`))
+                mozaik.logger.info(
+                    chalk.yellow(`[travis] calling repository: ${owner}/${repository}`)
+                )
 
                 travis.repos(owner, repository).get((err, res) => {
                     if (err) return reject(err)
@@ -43,13 +46,17 @@ const client = mozaik => {
          */
         buildHistory({ owner, repository }) {
             return new Promise((resolve, reject) => {
-                mozaik.logger.info(chalk.yellow(`[travis] calling buildHistory: ${owner}/${repository}`))
+                mozaik.logger.info(
+                    chalk.yellow(`[travis] calling buildHistory: ${owner}/${repository}`)
+                )
 
                 travis.repos(owner, repository).builds.get((err, res) => {
                     if (err) return reject(err)
 
                     res.builds.forEach(build => {
-                        const commit = _.find(res.commits, { id: build.commit_id })
+                        const commit = _.find(res.commits, {
+                            id: build.commit_id,
+                        })
                         if (commit) {
                             build.commit = commit
                         }
@@ -58,9 +65,8 @@ const client = mozaik => {
                     resolve({ builds: res.builds })
                 })
             })
-        }
+        },
     }
 }
-
 
 module.exports = client

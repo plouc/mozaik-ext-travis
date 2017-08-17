@@ -33,6 +33,7 @@ class Repository extends Component {
             description: PropTypes.string.isRequired,
             github_language: PropTypes.string,
         }),
+        theme: PropTypes.object.isRequired,
     }
 
     static getApiRequest({ owner, repository }) {

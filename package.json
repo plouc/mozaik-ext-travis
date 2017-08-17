@@ -42,6 +42,7 @@
     "@mozaik/ui": "^2.0.0-alpha.13",
     "ava": "^0.22.0",
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^7.2.3",
     "coveralls": "^2.13.1",
     "cross-env": "^5.0.5",
     "enzyme": "^2.9.1",
@@ -64,6 +65,7 @@
   },
   "scripts": {
     "lint": "eslint ./src/** ./test/**",
+    "lint:fix": "eslint --fix ./src/** ./test/**",
     "test": "NODE_ENV=test ava --verbose",
     "test-cover": "NODE_ENV=test nyc ava --verbose",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",

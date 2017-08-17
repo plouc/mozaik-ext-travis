@@ -38,27 +38,24 @@ export default class BuildHistogram extends Component {
 
         let body = <WidgetLoader />
         if (apiData) {
-            const chartData = [
-                {
-                    id: 'builds',
-                    data: apiData.builds
-                        .map(build => ({
-                            x: build.number,
-                            y: Number((build.duration / 60).toFixed(2)), // converts s to mn
-                            color: colorsMapping[build.state],
-                        }))
-                        .reverse(),
-                },
-            ]
+            const chartData = apiData.builds
+                .map(build => ({
+                    build: build.number,
+                    duration: Number((build.duration / 60).toFixed(2)), // converts s to mn
+                    color: colorsMapping[build.state],
+                }))
+                .reverse()
 
             body = (
                 <ResponsiveBar
                     margin={margin}
                     data={chartData}
+                    indexBy="build"
+                    keys={['duration']}
                     xPadding={0.3}
                     theme={theme.charts}
                     animate={false}
-                    colorBy={d => d.color}
+                    colorBy={d => d.data.color}
                     enableLabels={false}
                     axisLeft={{
                         tickPadding: 7,

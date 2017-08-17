@@ -83,8 +83,8 @@ test('should display info if apiData is available', t => {
 
     const infoItems = wrapper.find('.list__item')
     t.is(infoItems.length, 3)
-    t.is(infoItems.at(0).text().trim(), `last build ${repository.last_build_state}`)
+    t.is(infoItems.at(0).text().trim(), `last build ${repository.last_build_state}`)
     t.regex(infoItems.at(1).text(), new RegExp(`in ${repository.last_build_duration}s`))
-    t.is(infoItems.at(2).text().trim(), `language: ${repository.github_language}`)
+    t.is(infoItems.at(2).text().trim(), `language: ${repository.github_language}`)
 })
 */

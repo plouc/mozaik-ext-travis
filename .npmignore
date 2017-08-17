@@ -1,12 +1,29 @@
-.DS_Store
-.travis.yml
-.eslintrc
-.npmignore
-*.log*
-yarn.lock
-/test
-/src
+# Doc
 /preview
-/coverage
+
+# config
+.babelrc
+.eslintrc.yml
+.gitignore
+.npmignore
+.travis.yml
+
+# Logs
+*.log*
+
+# Non transpiled source code
+/src
+
+# Tests
+/test
 /.nyc_output
-ISSUE_TEMPLATE.md
+/coverage
+
+# GitHub
+/.github
+
+# OSX
+.DS_Store
+
+# IDE
+.idea

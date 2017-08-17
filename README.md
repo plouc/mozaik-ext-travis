@@ -7,6 +7,9 @@
 [![Coverage Status][coveralls-image]][coveralls-url]
 ![widget count][widget-count-image]
 
+> This branch contains code for the version compatible with
+> Mozaïk v2, if you're looking for v1, please use
+> [mozaik-1 branch](https://github.com/plouc/mozaik-ext-travis/tree/mozaik-1).
 
 ## Demo
 
@@ -111,8 +114,8 @@ dashboards:
 [license-url]: https://github.com/plouc/mozaik-ext-travis/blob/master/LICENSE.md
 [travis-image]: https://img.shields.io/travis/plouc/mozaik-ext-travis.svg?style=flat-square
 [travis-url]: https://travis-ci.org/plouc/mozaik-ext-travis
-[npm-image]: https://img.shields.io/npm/v/mozaik-ext-travis.svg?style=flat-square
-[npm-url]: https://www.npmjs.com/package/mozaik-ext-travis
+[npm-image]: https://img.shields.io/npm/v/@mozaik/ext-travis.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/@mozaik/ext-travis
 [gemnasium-image]: https://img.shields.io/gemnasium/plouc/mozaik-ext-travis.svg?style=flat-square
 [gemnasium-url]: https://gemnasium.com/plouc/mozaik-ext-travis
 [coveralls-image]: https://img.shields.io/coveralls/plouc/mozaik-ext-travis/master.svg?style=flat-square

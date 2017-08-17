@@ -15,6 +15,38 @@
 
 You can see a live demo of the widgets [here](http://mozaik-travis.herokuapp.com/)
 
+## Install
+
+- Install extension:
+
+  ```sh
+  npm install -S @mozaik/ext-travis
+  ```
+  
+  or using yarn
+  
+  ```sh
+  yarn add @mozaik/ext-travis
+  ```
+
+- Register client api by adding to dashboard `server.js`:
+
+  ```javascript
+  // …
+  Mozaik.registerApi('travis', require('@mozaik/ext-travis/client'))
+  ```
+
+- Register widgets by adding to dashboard `src/index.js`:
+
+  ```javascript
+  import { Registry } from '@mozaik/ui'
+  import travis from '@mozaik/ext-travis'
+  // … 
+  Registry.addExtensions({
+      travis,
+  })
+  ```
+
 ## Widgets
 
 ### Travis Repository

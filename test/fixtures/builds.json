@@ -1,0 +1,147 @@
+[
+    {
+        "id": 410434304,
+        "number": "637",
+        "state": "passed",
+        "duration": 327,
+        "event_type": "push",
+        "previous_state": "passed",
+        "pull_request_title": null,
+        "pull_request_number": null,
+        "started_at": "2018-07-31T17:22:09Z",
+        "finished_at": "2018-07-31T17:25:16Z",
+        "private": false,
+        "repository": {
+            "@type": "repository",
+            "@href": "/repo/3637580",
+            "@representation": "minimal",
+            "id": 3637580,
+            "name": "mozaik",
+            "slug": "plouc/mozaik"
+        },
+        "branch": {
+            "@type": "branch",
+            "@href": "/repo/3637580/branch/master",
+            "@representation": "minimal",
+            "name": "master"
+        },
+        "tag": null,
+        "commit": {
+            "id": 123239670,
+            "sha": "d4377726af930731229c7ac203f2de9fe2467a9b",
+            "ref": "refs/heads/master",
+            "message": "feat(demo): upgrade demo dependencies",
+            "compare_url": "https://github.com/plouc/mozaik/compare/48bd4ba7ad86...d4377726af93",
+            "committed_at": "2018-07-31T17:21:19Z"
+        },
+        "jobs": [
+            {
+                "id": 410434305
+            },
+            {
+                "id": 410434306
+            }
+        ],
+        "stages": [],
+        "created_by": {
+            "id": 16103,
+            "login": "plouc"
+        },
+        "updated_at": "2018-07-31T17:25:16.523Z"
+    },
+    {
+        "id": 410427842,
+        "number": "636",
+        "state": "passed",
+        "duration": 323,
+        "event_type": "push",
+        "previous_state": null,
+        "pull_request_title": null,
+        "pull_request_number": null,
+        "started_at": "2018-07-31T17:07:09Z",
+        "finished_at": "2018-07-31T17:13:29Z",
+        "private": false,
+        "repository": {
+            "id": 3637580,
+            "name": "mozaik",
+            "slug": "plouc/mozaik"
+        },
+        "branch": {
+            "name": "@mozaik/ui@2.0.0-rc.2"
+        },
+        "tag": {
+            "repository_id": 3637580,
+            "name": "@mozaik/ui@2.0.0-rc.2",
+            "last_build_id": null
+        },
+        "commit": {
+            "id": 123237828,
+            "sha": "48bd4ba7ad8667c7ed59d0d10c0896cc9670075d",
+            "ref": "refs/tags/@mozaik/ui@2.0.0-rc.2",
+            "message": "bump(@mozaik/ui): bump @mozaik/ui to version 2.0.0-rc.2",
+            "compare_url": "https://github.com/plouc/mozaik/compare/@mozaik/ui@2.0.0-rc.2",
+            "committed_at": null
+        },
+        "jobs": [
+            {
+                "id": 410427843
+            },
+            {
+                "id": 410427844
+            }
+        ],
+        "stages": [],
+        "created_by": {
+            "id": 16103,
+            "login": "plouc"
+        },
+        "updated_at": "2018-07-31T17:13:29.265Z"
+    },
+    {
+        "id": 410427839,
+        "number": "635",
+        "state": "passed",
+        "duration": 374,
+        "event_type": "push",
+        "previous_state": "passed",
+        "pull_request_title": null,
+        "pull_request_number": null,
+        "started_at": "2018-07-31T17:07:15Z",
+        "finished_at": "2018-07-31T17:10:28Z",
+        "private": false,
+        "repository": {
+            "id": 3637580,
+            "name": "mozaik",
+            "slug": "plouc/mozaik"
+        },
+        "branch": {
+            "name": "master"
+        },
+        "tag": null,
+        "commit": {
+            "id": 123237827,
+            "sha": "48bd4ba7ad8667c7ed59d0d10c0896cc9670075d",
+            "ref": "refs/heads/master",
+            "message": "bump(@mozaik/ui): bump @mozaik/ui to version 2.0.0-rc.2",
+            "compare_url": "https://github.com/plouc/mozaik/compare/a5f578418a6c...48bd4ba7ad86",
+            "committed_at": "2018-07-31T17:06:19Z"
+        },
+        "jobs": [
+            {
+                "id": 410427840
+            },
+            {
+                "id": 410427841
+            }
+        ],
+        "stages": [],
+        "created_by": {
+            "@type": "user",
+            "@href": "/user/16103",
+            "@representation": "minimal",
+            "id": 16103,
+            "login": "plouc"
+        },
+        "updated_at": "2018-07-31T17:10:28.949Z"
+    }
+]

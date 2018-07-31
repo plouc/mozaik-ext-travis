@@ -1,0 +1,257 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should display info if apiData is available 1`] = `
+<div
+  className="sc-bdVaJa eydJRb"
+  style={Object {}}
+>
+  <div
+    className="sc-bwzfXH bJUZVN"
+  >
+    <header
+      className="sc-htpNat lcyfRu"
+      style={Object {}}
+    >
+      <span>
+        <div
+          className="sc-ifAKCX rpFvk"
+        >
+          plouc/mozaik
+        </div>
+        
+      </span>
+      <div
+        className="sc-EHOje iJdEwV"
+      >
+        <svg
+          fill="none"
+          height="2vmin"
+          stroke="#000"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          width="2vmin"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <line
+            x1="12"
+            x2="12"
+            y1="16"
+            y2="12"
+          />
+          <line
+            x1="12"
+            x2="12"
+            y1="8"
+            y2="8"
+          />
+        </svg>
+      </div>
+    </header>
+    <div
+      className="sc-bZQynM kFUlyb"
+      style={Object {}}
+    >
+      <div
+        className="sc-bRBYWo ldBljU"
+      >
+        <div
+          className="sc-hzDkRC gfEKNv"
+        >
+          Mozaïk is a tool based on nodejs / reactjs to easily build beautiful dashboards
+        </div>
+        <div
+          className="sc-jhAzac jjllMB"
+        >
+          <span
+            className="sc-VigVT eprixE"
+            style={Object {}}
+          >
+            <span
+              className="sc-fjdhpX kbqJsB"
+            >
+              <svg
+                fill="none"
+                height="1.8vmin"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                width="1.8vmin"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <line
+                  x1="6"
+                  x2="6"
+                  y1="3"
+                  y2="15"
+                />
+                <circle
+                  cx="18"
+                  cy="6"
+                  r="3"
+                />
+                <circle
+                  cx="6"
+                  cy="18"
+                  r="3"
+                />
+                <path
+                  d="M18 9a9 9 0 0 1-9 9"
+                />
+              </svg>
+            </span>
+            <span
+              className="sc-jTzLTM itVkgL"
+            >
+              <span
+                className="sc-fBuWsC PbwII"
+                style={
+                  Object {
+                    "color": "#000",
+                  }
+                }
+                type="default"
+              >
+                master
+              </span>
+            </span>
+          </span>
+          <span
+            className="sc-VigVT eprixE"
+            style={Object {}}
+          >
+            <span
+              className="sc-fjdhpX kbqJsB"
+            >
+              <svg
+                fill="none"
+                height="1.8vmin"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                style={
+                  Object {
+                    "color": "#8ddb8d",
+                  }
+                }
+                viewBox="0 0 24 24"
+                width="1.8vmin"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
+                />
+                <polyline
+                  points="22 4 12 14.01 9 11.01"
+                />
+              </svg>
+            </span>
+            <span
+              className="sc-jTzLTM itVkgL"
+            >
+              last build
+               
+              <span
+                className="sc-fMiknA boQYET"
+                style={
+                  Object {
+                    "color": "#8ddb8d",
+                  }
+                }
+                type="default"
+              >
+                passed
+              </span>
+            </span>
+          </span>
+          <span
+            className="sc-VigVT eprixE"
+            style={Object {}}
+          >
+            <span
+              className="sc-fjdhpX kbqJsB"
+            >
+              <svg
+                fill="none"
+                height="1.8vmin"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                width="1.8vmin"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                />
+                <polyline
+                  points="12 6 12 12 16 14"
+                />
+              </svg>
+            </span>
+            <span
+              className="sc-jTzLTM itVkgL"
+            >
+              <span>
+                4 years ago
+                 in
+                 
+                53 sec
+              </span>
+            </span>
+          </span>
+          <span
+            className="sc-VigVT eprixE"
+            style={Object {}}
+          >
+            <span
+              className="sc-fjdhpX kbqJsB"
+            >
+              <svg
+                fill="none"
+                height="1.8vmin"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                width="1.8vmin"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <polyline
+                  points="16 18 22 12 16 6"
+                />
+                <polyline
+                  points="8 6 2 12 8 18"
+                />
+              </svg>
+            </span>
+            <span
+              className="sc-jTzLTM itVkgL"
+            >
+              language
+            </span>
+            <span
+              className="sc-fjdhpX kbqJsB"
+            >
+              JavaScript
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

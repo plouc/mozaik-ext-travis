@@ -3,9 +3,19 @@
 [![License][license-image]][license-url]
 [![Travis CI][travis-image]][travis-url]
 [![NPM version][npm-image]][npm-url]
-[![Dependencies][gemnasium-image]][gemnasium-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
 ![widget count][widget-count-image]
+
+![Mozaïk travis dashboard](preview/dashboard.png)
+
+- [installation](#install)
+- [client configuration](#client-configuration)
+- [widgets](#widgets)
+    - [BuildHistogram](#buildhistogram)
+    - [BuildHistory](#buildhistory)
+    - [LatestRepositoryBuild](#latestrepositorybuild)
+    - [Repository](#repository)
+    - [RepositoryBuildsStats](#repositorybuildsstats)
 
 > This branch contains code for the version compatible with
 > Mozaïk v2, if you're looking for v1, please use
@@ -17,72 +27,79 @@ You can see a live demo of the widgets [here](https://mozaik-ext-travis-v2.herok
 
 ## Install
 
-- Install extension:
+### Install extension:
 
-  ```sh
-  npm install -S @mozaik/ext-travis
-  ```
-  
-  or using yarn
-  
-  ```sh
-  yarn add @mozaik/ext-travis
-  ```
+```sh
+# npm
+npm install -S @mozaik/ext-travis
+# yarn
+yarn add @mozaik/ext-travis
+```
 
-- Register client api by adding to dashboard `server.js`:
+### Register client api
 
-  ```javascript
-  // …
-  Mozaik.registerApi('travis', require('@mozaik/ext-travis/client'))
-  ```
+You should register extension's client by adding this to `apis.js`:
 
-- Register widgets by adding to dashboard `src/index.js`:
+```javascript
+// …
+Mozaik.registerApi('travis', require('@mozaik/ext-travis/client'))
+```
 
-  ```javascript
-  import { Registry } from '@mozaik/ui'
-  import travis from '@mozaik/ext-travis'
-  // … 
-  Registry.addExtensions({
-      travis,
-  })
-  ```
+### Register widgets
+
+You should register extension's widget by adding this to `src/register_extensions.js`:
+
+```javascript
+import { Registry } from '@mozaik/ui'
+import travis from '@mozaik/ext-travis'
+// … 
+Registry.addExtensions({
+    travis,
+})
+```
+
+## Client Configuration
+
+In order to use the Mozaïk travis extension, you must also configure its **client**.
+Configuration is loaded from environment variables.
+
+| env key          | required | description
+|------------------|----------|----------------------------
+| TRAVIS_API_TOKEN | yes      | your personal travis API token
 
 ## Widgets
 
-### Travis Repository
+### BuildHistogram
 
-![travis repository](https://raw.githubusercontent.com/plouc/mozaik-ext-travis/master/preview/travis.repository.png)
+![BuildHistogram widget](preview/build_histogram.png)
 
-> Display travis repo infos
+> Display travis repo build histogram (duration / build number / status)
 
 #### parameters
 
 key          | required | description
 -------------|----------|---------------
-`owner`      | yes      | *repo owner*
-`repository` | yes      | *repo name*
+`owner`      | yes      | repo owner
+`repository` | yes      | repo name
+`limit`      | no       | limit displayed builds, default to `20`
+`title`      | no       | override default title, default to `${owner}/${repository} builds`
 
 #### usage
 
 ``` yaml
-# config.yml
-dashboards:
-- # …
-  widgets:
-  - extension:  travis
-    widget:     Repository
-    owner:      plouc
-    repository: mozaik
-    columns:    1
-    rows:       1
-    x:          0
-    y:          0
+- extension:  travis
+  widget:     BuildHistogram
+  owner:      plouc
+  repository: mozaik
+  columns:    1
+  rows:       1
+  x:          0
+  y:          0
 ```
 
+### BuildHistory
 
-### Travis Build history
-
-![travis build history](https://raw.githubusercontent.com/plouc/mozaik-ext-travis/master/preview/travis.build_history.png)
+![BuildHistory widget](preview/build_history.png)
 
 > Display travis repo build history
 
@@ -92,30 +109,78 @@ key          | required | description
 -------------|----------|---------------
 `owner`      | yes      | *repo owner*
 `repository` | yes      | *repo name*
+`limit`      | no       | limit displayed builds, default to `10`
+`title`      | no       | override default title, default to `${owner}/${repository} builds`
 
 #### usage
 
 ``` yaml
-# config.yml
-dashboards:
-- # …
-  widgets:
-  - extension:  travis
-    widget:     BuildHistory
-    owner:      plouc
-    repository: mozaik
-    columns:    1
-    rows:       1
-    x:          0
-    y:          0
+- extension:  travis
+  widget:     BuildHistory
+  owner:      plouc
+  repository: mozaik
+  columns:    1
+  rows:       1
+  x:          0
+  y:          0
 ```
 
+### LatestRepositoryBuild
 
-### Travis Build histogram
+![LatestRepositoryBuild widget](preview/latest_repository_build.png)
 
-![travis build histogram](https://raw.githubusercontent.com/plouc/mozaik-ext-travis/master/preview/travis.build_histogram.png)
+> Show info about latest repository build for default branch
 
-> Display travis repo build histogram (duration / build number / status)
+#### parameters
+
+key          | required | description
+-------------|----------|---------------
+`owner`      | yes      | repo owner
+`repository` | yes      | repo name
+
+``` yaml
+- extension:  travis
+  widget:     LatestRepositoryBuild
+  owner:      plouc
+  repository: mozaik
+  columns:    1
+  rows:       1
+  x:          0
+  y:          0
+```
+
+### Repository
+
+![Repository widgets](preview/repository.png)
+
+> Display travis repository info
+
+#### parameters
+
+key          | required | description
+-------------|----------|---------------
+`owner`      | yes      | repo owner
+`repository` | yes      | repo name
+`title`      | no       | override default title, default to `${owner}/${repository}`
+
+#### usage
+
+``` yaml
+- extension:  travis
+  widget:     Repository
+  owner:      plouc
+  repository: mozaik
+  columns:    1
+  rows:       1
+  x:          0
+  y:          0
+```
+
+### RepositoryBuildsStats
+
+![RepositoryBuildsStats widget](preview/repository_builds_stats.png)
+
+> Show global stats about repository builds
 
 #### parameters
 
@@ -123,22 +188,19 @@ key          | required | description
 -------------|----------|---------------
 `owner`      | yes      | *repo owner*
 `repository` | yes      | *repo name*
+`title`      | no       | override default title, default to `${owner}/${repository} builds`
 
 #### usage
 
 ``` yaml
-# config.yml
-dashboards:
-- # …
-  widgets:
-  - extension:  travis
-    widget:     BuildHistogram
-    owner:      plouc
-    repository: mozaik
-    columns:    1
-    rows:       1
-    x:          0
-    y:          0
+- extension:  travis
+  widget:     RepositoryBuildsStats
+  owner:      plouc
+  repository: mozaik
+  columns:    1
+  rows:       1
+  x:          0
+  y:          0
 ```
 
 
@@ -148,8 +210,6 @@ dashboards:
 [travis-url]: https://travis-ci.org/plouc/mozaik-ext-travis
 [npm-image]: https://img.shields.io/npm/v/@mozaik/ext-travis.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/@mozaik/ext-travis
-[gemnasium-image]: https://img.shields.io/gemnasium/plouc/mozaik-ext-travis.svg?style=flat-square
-[gemnasium-url]: https://gemnasium.com/plouc/mozaik-ext-travis
 [coveralls-image]: https://img.shields.io/coveralls/plouc/mozaik-ext-travis/master.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/github/plouc/mozaik-ext-travis?branch=master
-[widget-count-image]: https://img.shields.io/badge/widgets-x3-green.svg?style=flat-square
+[widget-count-image]: https://img.shields.io/badge/widgets-x5-green.svg?style=flat-square

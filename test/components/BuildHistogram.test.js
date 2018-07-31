@@ -1,55 +1,63 @@
-import test from 'ava'
 import React from 'react'
 import { shallow } from 'enzyme'
+import { WidgetLoader, WidgetHeader, defaultTheme } from '@mozaik/ui'
 import BuildHistogram from '../../src/components/BuildHistogram'
-import { WidgetLoader, WidgetHeader } from 'mozaik/ui'
 
-const sampleOwner = 'plouc'
-const sampleRepository = 'mozaik'
+const owner = 'plouc'
+const repository = 'mozaik'
 
-test('should return correct api request', t => {
-    t.deepEqual(
-        BuildHistogram.getApiRequest({
-            owner: sampleOwner,
-            repository: sampleRepository,
-        }),
-        {
-            id: `travis.buildHistory.${sampleOwner}.${sampleRepository}`,
+describe('getApiRequest', () => {
+    it('should return correct api request', () => {
+        expect(
+            BuildHistogram.getApiRequest({
+                owner,
+                repository,
+            })
+        ).toEqual({
+            id: `travis.repositoryBuildHistory.${owner}.${repository}.20`,
             params: {
-                owner: sampleOwner,
-                repository: sampleRepository,
+                owner,
+                repository,
+                limit: 20,
             },
+        })
+    })
+})
+
+it('should display loader if no apiData available', () => {
+    const wrapper = shallow(
+        <BuildHistogram owner={owner} repository={repository} theme={defaultTheme} />
+    )
+
+    expect(wrapper.find(WidgetLoader)).toHaveLength(1)
+})
+
+it('should display owner/repo', () => {
+    const wrapper = shallow(
+        <BuildHistogram owner={owner} repository={repository} theme={defaultTheme} />,
+        {
+            context: { theme: {} },
         }
     )
-})
-
-test('should display loader if no apiData available', t => {
-    const wrapper = shallow(<BuildHistogram owner={sampleOwner} repository={sampleRepository} />, {
-        context: { theme: {} },
-    })
-
-    t.is(wrapper.find(WidgetLoader).length, 1)
-})
-
-test('should display owner/repo', t => {
-    const wrapper = shallow(<BuildHistogram owner={sampleOwner} repository={sampleRepository} />, {
-        context: { theme: {} },
-    })
 
     const header = wrapper.find(WidgetHeader)
-    t.is(header.length, 1)
-    t.is(header.prop('title'), 'Builds')
-    t.is(header.prop('subject'), `${sampleOwner}/${sampleRepository}`)
+    expect(header).toHaveLength(1)
+    expect(header.prop('title')).toBe('builds')
+    expect(header.prop('subject')).toBe(`${owner}/${repository}`)
 })
 
-test('should allow title override', t => {
+it('should allow title override', () => {
     const wrapper = shallow(
-        <BuildHistogram owner={sampleOwner} repository={sampleRepository} title="override" />,
-        { context: { theme: {} } }
+        <BuildHistogram
+            owner={owner}
+            repository={repository}
+            title="override"
+            theme={defaultTheme}
+        />
     )
 
     const header = wrapper.find(WidgetHeader)
-    t.is(header.length, 1)
-    t.is(header.prop('title'), 'override')
-    t.is(header.prop('subject'), null)
+    expect(header).toHaveLength(1)
+    expect(header.prop('title')).toBe('override')
+    expect(header.prop('subject')).toBe(null)
 })

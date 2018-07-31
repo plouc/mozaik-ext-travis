@@ -1,90 +1,99 @@
-import test from 'ava'
 import React from 'react'
 import { shallow } from 'enzyme'
+import renderer from 'react-test-renderer'
+import { ThemeProvider } from 'styled-components'
+import { WidgetLoader, WidgetHeader, defaultTheme } from '@mozaik/ui'
 import Repository from '../../src/components/Repository'
-import { WidgetLoader, WidgetHeader } from 'mozaik/ui'
 
 const sampleOwner = 'plouc'
 const sampleRepository = 'mozaik'
 
-test('should return correct api request', t => {
-    t.deepEqual(
+it('should return correct api request', () => {
+    expect(
         Repository.getApiRequest({
             owner: sampleOwner,
             repository: sampleRepository,
-        }),
+        })
+    ).toEqual({
+        id: `travis.repository.${sampleOwner}.${sampleRepository}`,
+        params: {
+            owner: sampleOwner,
+            repository: sampleRepository,
+        },
+    })
+})
+
+it('should display loader if no apiData available', () => {
+    const wrapper = shallow(
+        <Repository owner={sampleOwner} repository={sampleRepository} theme={defaultTheme} />,
         {
-            id: `travis.repository.${sampleOwner}.${sampleRepository}`,
-            params: {
-                owner: sampleOwner,
-                repository: sampleRepository,
-            },
+            context: { theme: {} },
         }
     )
+
+    expect(wrapper.find(WidgetLoader)).toHaveLength(1)
 })
 
-test('should display loader if no apiData available', t => {
-    const wrapper = shallow(<Repository owner={sampleOwner} repository={sampleRepository} />, {
-        context: { theme: {} },
-    })
-
-    t.is(wrapper.find(WidgetLoader).length, 1)
-})
-
-test('should display owner/repo', t => {
-    const wrapper = shallow(<Repository owner={sampleOwner} repository={sampleRepository} />, {
-        context: { theme: {} },
-    })
-
-    const header = wrapper.find(WidgetHeader)
-    t.is(header.length, 1)
-    t.is(header.prop('title'), '')
-    t.is(header.prop('subject'), `${sampleOwner}/${sampleRepository}`)
-})
-
-test('should allow title override', t => {
+it('should display owner/repo', () => {
     const wrapper = shallow(
-        <Repository owner={sampleOwner} repository={sampleRepository} title="override" />,
-        { context: { theme: {} } }
+        <Repository owner={sampleOwner} repository={sampleRepository} theme={defaultTheme} />,
+        {
+            context: { theme: {} },
+        }
     )
 
     const header = wrapper.find(WidgetHeader)
-    t.is(header.length, 1)
-    t.is(header.prop('title'), 'override')
-    t.is(header.prop('subject'), null)
+    expect(header).toHaveLength(1)
+    expect(header.prop('title')).toBe('')
+    expect(header.prop('subject')).toBe(`${sampleOwner}/${sampleRepository}`)
 })
 
-/*
-test('should display info if apiData is available', t => {
-    const repository = {
-        id:                     3637580,
-        slug:                   'plouc/mozaik',
-        description:            'Mozaïk is a tool based on nodejs / reactjs to easily build beautiful dashboards',
-        last_build_id:          45344564,
-        last_build_number:      '6',
-        last_build_state:       'passed',
-        last_build_duration:    53,
-        last_build_language:    null,
-        last_build_started_at:  '2014-12-29T11:33:09Z',
-        last_build_finished_at: '2014-12-29T11:34:02Z',
-        github_language:        'JavaScript',
-    }
+it('should allow title override', () => {
     const wrapper = shallow(
         <Repository
             owner={sampleOwner}
             repository={sampleRepository}
-            apiData={repository}
-        />
+            title="override"
+            theme={defaultTheme}
+        />,
+        { context: { theme: {} } }
     )
 
-
-    t.is(wrapper.find('.travis__repository__slug').text(), `${sampleOwner}/${sampleRepository}`)
-    t.is(wrapper.find('.widget__header__count').text(), `#${repository.last_build_number}`)
-
-    const infoItems = wrapper.find('.list__item')
-    t.is(infoItems.length, 3)
-    t.is(infoItems.at(0).text().trim(), `last build ${repository.last_build_state}`)
-    t.regex(infoItems.at(1).text(), new RegExp(`in ${repository.last_build_duration}s`))
-    t.is(infoItems.at(2).text().trim(), `language: ${repository.github_language}`)
+    const header = wrapper.find(WidgetHeader)
+    expect(header).toHaveLength(1)
+    expect(header.prop('title')).toBe('override')
+    expect(header.prop('subject')).toBe(null)
 })
-*/
+
+it('should display info if apiData is available', () => {
+    const apiData = {
+        id: 3637580,
+        slug: 'plouc/mozaik',
+        description:
+            'Mozaïk is a tool based on nodejs / reactjs to easily build beautiful dashboards',
+        github_language: 'JavaScript',
+        default_branch: {
+            name: 'master',
+        },
+        last_build: {
+            state: 'passed',
+            number: '6',
+            duration: 53,
+            started_at: '2014-12-29T11:33:09Z',
+            finished_at: '2014-12-29T11:34:02Z',
+        },
+    }
+
+    const tree = renderer.create(
+        <ThemeProvider theme={defaultTheme}>
+            <Repository
+                owner={sampleOwner}
+                repository={sampleRepository}
+                theme={defaultTheme}
+                apiData={apiData}
+            />
+        </ThemeProvider>
+    )
+
+    expect(tree).toMatchSnapshot()
+})

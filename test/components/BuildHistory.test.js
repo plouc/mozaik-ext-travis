@@ -1,101 +1,124 @@
-import test from 'ava'
 import React from 'react'
 import { shallow } from 'enzyme'
+import { ThemeProvider } from 'styled-components'
+import renderer from 'react-test-renderer'
+import { WidgetLoader, WidgetHeader, defaultTheme } from '@mozaik/ui'
 import BuildHistory from '../../src/components/BuildHistory'
 import BuildHistoryItem from '../../src/components/BuildHistoryItem'
-import { WidgetLoader, WidgetHeader } from 'mozaik/ui'
+import builds from '../fixtures/builds'
 
-const sampleOwner = 'plouc'
-const sampleRepository = 'mozaik'
-const sampleBuilds = [
-    {
-        id: 2,
-        number: '2',
-        state: 'passed',
-        duration: 10,
-        finished_at: '2015-01-01T16:02:51Z',
-        commit: {
-            message: 'commit message 2',
-        },
-    },
-    {
-        id: 1,
-        number: '1',
-        state: 'passed',
-        duration: 10,
-        finished_at: '2015-01-01T16:02:51Z',
-        commit: {
-            message: 'commit message 1',
-        },
-    },
-    {
-        id: 0,
-        number: '0',
-        state: 'failed',
-        duration: 10,
-        finished_at: '2015-01-01T16:02:51Z',
-        commit: {
-            message: 'commit message 0',
-        },
-    },
-]
+const owner = 'plouc'
+const repository = 'mozaik'
 
-test('should return correct api request', t => {
-    t.deepEqual(
-        BuildHistory.getApiRequest({
-            owner: sampleOwner,
-            repository: sampleRepository,
-        }),
-        {
-            id: `travis.buildHistory.${sampleOwner}.${sampleRepository}`,
+jest.mock('moment', () => () => ({ fromNow: () => '2 days ago' }))
+
+describe('getApiRequest', () => {
+    it('should return correct api request', () => {
+        expect(
+            BuildHistory.getApiRequest({
+                owner,
+                repository,
+            })
+        ).toEqual({
+            id: `travis.repositoryBuildHistory.${owner}.${repository}.10`,
             params: {
-                owner: sampleOwner,
-                repository: sampleRepository,
+                limit: 10,
+                owner,
+                repository,
             },
-        }
-    )
-})
-
-test('should display loader if no apiData available', t => {
-    const wrapper = shallow(<BuildHistory owner={sampleOwner} repository={sampleRepository} />, {
-        context: { theme: {} },
+        })
     })
 
-    t.is(wrapper.find(WidgetLoader).length, 1)
-})
-
-test('should display owner/repo', t => {
-    const wrapper = shallow(<BuildHistory owner={sampleOwner} repository={sampleRepository} />, {
-        context: { theme: {} },
+    it('should support custom limit', () => {
+        expect(
+            BuildHistory.getApiRequest({
+                owner,
+                repository,
+                limit: 35,
+            })
+        ).toEqual({
+            id: `travis.repositoryBuildHistory.${owner}.${repository}.35`,
+            params: {
+                limit: 35,
+                owner,
+                repository,
+            },
+        })
     })
-
-    const header = wrapper.find(WidgetHeader)
-    t.is(header.length, 1)
-    t.is(header.prop('title'), 'Builds')
-    t.is(header.prop('subject'), `${sampleOwner}/${sampleRepository}`)
 })
 
-test('should allow title override', t => {
+it('should display loader if no apiData available', () => {
     const wrapper = shallow(
-        <BuildHistory owner={sampleOwner} repository={sampleRepository} title="override" />,
-        { context: { theme: {} } }
+        <BuildHistory owner={owner} repository={repository} theme={defaultTheme} />
     )
 
-    const header = wrapper.find(WidgetHeader)
-    t.is(header.length, 1)
-    t.is(header.prop('title'), 'override')
-    t.is(header.prop('subject'), null)
+    expect(wrapper.find(WidgetLoader)).toHaveLength(1)
 })
 
-test('should display builds info', t => {
+describe('title', () => {
+    it('should display owner/repo by default', () => {
+        const wrapper = shallow(
+            <BuildHistory owner={owner} repository={repository} theme={defaultTheme} />
+        )
+
+        const header = wrapper.find(WidgetHeader)
+        expect(header).toHaveLength(1)
+        expect(header.prop('title')).toBe('builds')
+        expect(header.prop('subject')).toEqual(`${owner}/${repository}`)
+    })
+
+    it('should allow title override', () => {
+        const wrapper = shallow(
+            <BuildHistory
+                owner={owner}
+                repository={repository}
+                title="override"
+                theme={defaultTheme}
+            />
+        )
+
+        const header = wrapper.find(WidgetHeader)
+        expect(header).toHaveLength(1)
+        expect(header.prop('title')).toBe('override')
+        expect(header.prop('subject')).toBe(null)
+    })
+})
+
+it('should display builds info', () => {
     const wrapper = shallow(
         <BuildHistory
-            owner={sampleOwner}
-            repository={sampleRepository}
-            apiData={{ builds: sampleBuilds }}
+            owner={owner}
+            repository={repository}
+            theme={defaultTheme}
+            apiData={{
+                builds: {
+                    items: builds,
+                    pagination: { count: 10 },
+                },
+            }}
         />
     )
 
-    const builds = wrapper.find(BuildHistoryItem)
-    t.is(builds.length, sampleBuilds.length)
+    const buildItems = wrapper.find(BuildHistoryItem)
+    expect(buildItems).toHaveLength(builds.length)
+})
+
+it('should render as expected', () => {
+    const tree = renderer.create(
+        <ThemeProvider theme={defaultTheme}>
+            <BuildHistory
+                owner={owner}
+                repository={repository}
+                theme={defaultTheme}
+                apiData={{
+                    builds: {
+                        items: builds,
+                        pagination: { count: 10 },
+                    },
+                }}
+            />
+        </ThemeProvider>
+    )
+
+    expect(tree).toMatchSnapshot()
 })

@@ -1,48 +1,60 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import BuildsIcon from 'react-icons/lib/fa/bug'
-import { TrapApiError, Widget, WidgetHeader, WidgetBody, WidgetLoader } from '@mozaik/ui'
-import { ResponsiveBar } from 'nivo'
+import { ResponsiveBar } from '@nivo/bar'
+import {
+    TrapApiError,
+    Widget,
+    WidgetHeader,
+    WidgetBody,
+    WidgetLoader,
+    BarChartIcon,
+} from '@mozaik/ui'
 import { BuildPropType } from './BuildHistoryItem'
+import { colorByState } from '../lib/state'
 
-const margin = { top: 20, right: 20, bottom: 60, left: 70 }
+const margin = { top: 10, right: 20, bottom: 80, left: 70 }
 
 export default class BuildHistogram extends Component {
     static propTypes = {
         owner: PropTypes.string.isRequired,
         repository: PropTypes.string.isRequired,
+        limit: PropTypes.number.isRequired,
         title: PropTypes.string,
         apiData: PropTypes.shape({
-            builds: PropTypes.arrayOf(BuildPropType).isRequired,
+            builds: PropTypes.shape({
+                pagination: PropTypes.shape({
+                    count: PropTypes.number.isRequired,
+                }).isRequired,
+                items: PropTypes.arrayOf(BuildPropType).isRequired,
+            }).isRequired,
         }),
         apiError: PropTypes.object,
         theme: PropTypes.object.isRequired,
     }
 
-    static getApiRequest({ owner, repository }) {
+    static defaultProps = {
+        limit: 20,
+    }
+
+    static getApiRequest({ owner, repository, limit = BuildHistogram.defaultProps.limit }) {
         return {
-            id: `travis.buildHistory.${owner}.${repository}`,
-            params: { owner, repository },
+            id: `travis.repositoryBuildHistory.${owner}.${repository}.${limit}`,
+            params: { owner, repository, limit },
         }
     }
 
     render() {
         const { owner, repository, title, apiData, apiError, theme } = this.props
 
-        const colorsMapping = {
-            failed: theme.colors.failure,
-            errored: theme.colors.success,
-            passed: theme.colors.success,
-            canceled: theme.colors.unknown,
-        }
-
+        let count
         let body = <WidgetLoader />
         if (apiData) {
-            const chartData = apiData.builds
+            count = apiData.builds.pagination.count
+            const chartData = apiData.builds.items
                 .map(build => ({
                     build: build.number,
                     duration: Number((build.duration / 60).toFixed(2)), // converts s to mn
-                    color: colorsMapping[build.state],
+                    color: colorByState(theme.colors, build.state),
                 }))
                 .reverse()
 
@@ -52,11 +64,11 @@ export default class BuildHistogram extends Component {
                     data={chartData}
                     indexBy="build"
                     keys={['duration']}
-                    xPadding={0.3}
+                    padding={0.2}
                     theme={theme.charts}
                     animate={false}
                     colorBy={d => d.data.color}
-                    enableLabels={false}
+                    enableLabel={false}
                     axisLeft={{
                         tickPadding: 7,
                         tickSize: 0,
@@ -66,10 +78,12 @@ export default class BuildHistogram extends Component {
                     }}
                     axisBottom={{
                         tickSize: 0,
-                        tickPadding: 7,
+                        tickPadding: 10,
                         legend: 'build number',
                         legendPosition: 'center',
-                        legendOffset: 40,
+                        legendOffset: 60,
+                        tickRotation: -90,
+                        format: number => `#${number}`,
                     }}
                 />
             )
@@ -78,14 +92,13 @@ export default class BuildHistogram extends Component {
         return (
             <Widget>
                 <WidgetHeader
-                    title={title || 'Builds'}
+                    title={title || 'builds'}
                     subject={title ? null : `${owner}/${repository}`}
-                    icon={BuildsIcon}
+                    count={count}
+                    icon={BarChartIcon}
                 />
-                <WidgetBody style={{ overflowY: 'hidden' }}>
-                    <TrapApiError error={apiError}>
-                        {body}
-                    </TrapApiError>
+                <WidgetBody disablePadding={true} style={{ overflowY: 'hidden' }}>
+                    <TrapApiError error={apiError}>{body}</TrapApiError>
                 </WidgetBody>
             </Widget>
         )

@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import BuildsIcon from 'react-icons/lib/fa/bug'
-import { TrapApiError, Widget, WidgetHeader, WidgetBody, WidgetLoader } from '@mozaik/ui'
+import {
+    TrapApiError,
+    Widget,
+    WidgetHeader,
+    WidgetBody,
+    WidgetLoader,
+    ActivityIcon,
+} from '@mozaik/ui'
 import BuildHistoryItem, { BuildPropType } from './BuildHistoryItem'
 
 export default class BuildHistory extends Component {
@@ -9,42 +15,60 @@ export default class BuildHistory extends Component {
         owner: PropTypes.string.isRequired,
         repository: PropTypes.string.isRequired,
         title: PropTypes.string,
+        limit: PropTypes.number.isRequired,
+        hideHeader: PropTypes.bool.isRequired,
         apiData: PropTypes.shape({
-            builds: PropTypes.arrayOf(BuildPropType).isRequired,
+            builds: PropTypes.shape({
+                pagination: PropTypes.shape({
+                    count: PropTypes.number.isRequired,
+                }).isRequired,
+                items: PropTypes.arrayOf(BuildPropType).isRequired,
+            }).isRequired,
         }),
         apiError: PropTypes.object,
+        theme: PropTypes.object.isRequired,
     }
 
-    static getApiRequest({ owner, repository }) {
+    static defaultProps = {
+        limit: 10,
+        hideHeader: false,
+    }
+
+    static getApiRequest({ owner, repository, limit = BuildHistory.defaultProps.limit }) {
         return {
-            id: `travis.buildHistory.${owner}.${repository}`,
-            params: { owner, repository },
+            id: `travis.repositoryBuildHistory.${owner}.${repository}.${limit}`,
+            params: { owner, repository, limit },
         }
     }
 
     render() {
-        const { owner, repository, title, apiData, apiError } = this.props
+        const { owner, repository, title, hideHeader, apiData, apiError, theme } = this.props
 
         let body = <WidgetLoader />
-        if (apiData) {
+        let buildCount
+        if (apiData && !apiError) {
+            buildCount = apiData.builds.pagination.count
             body = (
                 <div>
-                    {apiData.builds.map(build => <BuildHistoryItem key={build.id} build={build} />)}
+                    {apiData.builds.items.map(build => (
+                        <BuildHistoryItem key={build.id} build={build} theme={theme} />
+                    ))}
                 </div>
             )
         }
 
         return (
             <Widget>
-                <WidgetHeader
-                    title={title || 'Builds'}
-                    subject={title ? null : `${owner}/${repository}`}
-                    icon={BuildsIcon}
-                />
-                <WidgetBody>
-                    <TrapApiError error={apiError}>
-                        {body}
-                    </TrapApiError>
+                {!hideHeader && (
+                    <WidgetHeader
+                        title={title || 'builds'}
+                        subject={title ? null : `${owner}/${repository}`}
+                        count={buildCount}
+                        icon={ActivityIcon}
+                    />
+                )}
+                <WidgetBody disablePadding={true} isHeaderless={hideHeader}>
+                    <TrapApiError error={apiError}>{body}</TrapApiError>
                 </WidgetBody>
             </Widget>
         )

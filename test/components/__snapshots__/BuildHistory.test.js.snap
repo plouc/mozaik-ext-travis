@@ -1,0 +1,606 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render as expected 1`] = `
+<div
+  className="sc-bdVaJa eydJRb"
+  style={Object {}}
+>
+  <div
+    className="sc-bwzfXH bJUZVN"
+  >
+    <header
+      className="sc-htpNat lcyfRu"
+      style={Object {}}
+    >
+      <span>
+        <div
+          className="sc-ifAKCX rpFvk"
+        >
+          plouc/mozaik
+        </div>
+        builds
+        <div
+          className="sc-bxivhb eDwDKI"
+        >
+          10
+        </div>
+      </span>
+      <div
+        className="sc-EHOje iJdEwV"
+      >
+        <svg
+          fill="none"
+          height="2vmin"
+          stroke="#000"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          width="2vmin"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <polyline
+            points="22 12 18 12 15 21 9 3 6 12 2 12"
+          />
+        </svg>
+      </div>
+    </header>
+    <div
+      className="sc-bZQynM FCrnA"
+      style={Object {}}
+    >
+      <div>
+        <div
+          className="sc-bRBYWo jxShFz"
+        >
+          <div
+            style={
+              Object {
+                "background": "#8ddb8d",
+              }
+            }
+          />
+          <div
+            className="sc-hzDkRC ghsfqN"
+          >
+            <svg
+              fill="none"
+              height="2vmin"
+              stroke="#8ddb8d"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="2vmin"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
+              />
+              <polyline
+                points="22 4 12 14.01 9 11.01"
+              />
+            </svg>
+            <span
+              style={
+                Object {
+                  "whiteSpace": "pre",
+                }
+              }
+            >
+              <span
+                className="sc-fMiknA boQYET"
+                style={
+                  Object {
+                    "color": "#000",
+                  }
+                }
+                type="default"
+              >
+                master
+              </span>
+               
+              <svg
+                fill="none"
+                height="1.6vmin"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                style={
+                  Object {
+                    "display": "inline-block",
+                    "verticalAlign": "middle",
+                  }
+                }
+                viewBox="0 0 24 24"
+                width="1.6vmin"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="4"
+                />
+                <line
+                  x1="1.05"
+                  x2="7"
+                  y1="12"
+                  y2="12"
+                />
+                <line
+                  x1="17.01"
+                  x2="22.96"
+                  y1="12"
+                  y2="12"
+                />
+              </svg>
+               
+              <span
+                className="sc-dVhcbM guLjQn"
+                type="default"
+              >
+                d437772
+              </span>
+            </span>
+            <span
+              style={
+                Object {
+                  "whiteSpace": "pre",
+                }
+              }
+            >
+              #
+              637
+               
+              <span
+                className="sc-eqIVtm hCYmlC"
+                style={
+                  Object {
+                    "color": "#8ddb8d",
+                  }
+                }
+                type="default"
+              >
+                passed
+              </span>
+            </span>
+            <div
+              className="sc-jhAzac frhiXs"
+            >
+              feat(demo): upgrade demo dependencies
+            </div>
+            <span
+              style={
+                Object {
+                  "gridColumnEnd": 4,
+                  "gridColumnStart": 2,
+                }
+              }
+            >
+              <span
+                className="sc-fAjcbJ efLRoA"
+                style={
+                  Object {
+                    "whiteSpace": "pre",
+                  }
+                }
+                type="default"
+              >
+                <svg
+                  fill="none"
+                  height="1.6vmin"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                  width="1.6vmin"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                  />
+                  <polyline
+                    points="12 6 12 12 16 14"
+                  />
+                </svg>
+                 
+                about
+                 
+                <span
+                  className="sc-fBuWsC kdDwSw"
+                >
+                  2 days ago
+                </span>
+                 
+                in
+                 
+                <span
+                  className="sc-fBuWsC kdDwSw"
+                >
+                  5 min 27 sec
+                </span>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div
+          className="sc-bRBYWo jxShFz"
+        >
+          <div
+            style={
+              Object {
+                "background": "#8ddb8d",
+              }
+            }
+          />
+          <div
+            className="sc-hzDkRC ghsfqN"
+          >
+            <svg
+              fill="none"
+              height="2vmin"
+              stroke="#8ddb8d"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="2vmin"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
+              />
+              <polyline
+                points="22 4 12 14.01 9 11.01"
+              />
+            </svg>
+            <span
+              style={
+                Object {
+                  "whiteSpace": "pre",
+                }
+              }
+            >
+              <span
+                className="sc-caSCKo fPSyYT"
+                style={
+                  Object {
+                    "color": "#000",
+                  }
+                }
+                type="default"
+              >
+                @mozaik/ui@2.0.0-rc.2
+              </span>
+               
+              <svg
+                fill="none"
+                height="1.6vmin"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                style={
+                  Object {
+                    "display": "inline-block",
+                    "verticalAlign": "middle",
+                  }
+                }
+                viewBox="0 0 24 24"
+                width="1.6vmin"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="4"
+                />
+                <line
+                  x1="1.05"
+                  x2="7"
+                  y1="12"
+                  y2="12"
+                />
+                <line
+                  x1="17.01"
+                  x2="22.96"
+                  y1="12"
+                  y2="12"
+                />
+              </svg>
+               
+              <span
+                className="sc-gisBJw fLrGjf"
+                type="default"
+              >
+                48bd4ba
+              </span>
+            </span>
+            <span
+              style={
+                Object {
+                  "whiteSpace": "pre",
+                }
+              }
+            >
+              #
+              636
+               
+              <span
+                className="sc-kjoXOD bVInpr"
+                style={
+                  Object {
+                    "color": "#8ddb8d",
+                  }
+                }
+                type="default"
+              >
+                passed
+              </span>
+            </span>
+            <div
+              className="sc-jhAzac frhiXs"
+            >
+              bump(@mozaik/ui): bump @mozaik/ui to version 2.0.0-rc.2
+            </div>
+            <span
+              style={
+                Object {
+                  "gridColumnEnd": 4,
+                  "gridColumnStart": 2,
+                }
+              }
+            >
+              <span
+                className="sc-cHGsZl WCtRp"
+                style={
+                  Object {
+                    "whiteSpace": "pre",
+                  }
+                }
+                type="default"
+              >
+                <svg
+                  fill="none"
+                  height="1.6vmin"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                  width="1.6vmin"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                  />
+                  <polyline
+                    points="12 6 12 12 16 14"
+                  />
+                </svg>
+                 
+                about
+                 
+                <span
+                  className="sc-fBuWsC kdDwSw"
+                >
+                  2 days ago
+                </span>
+                 
+                in
+                 
+                <span
+                  className="sc-fBuWsC kdDwSw"
+                >
+                  5 min 23 sec
+                </span>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div
+          className="sc-bRBYWo jxShFz"
+        >
+          <div
+            style={
+              Object {
+                "background": "#8ddb8d",
+              }
+            }
+          />
+          <div
+            className="sc-hzDkRC ghsfqN"
+          >
+            <svg
+              fill="none"
+              height="2vmin"
+              stroke="#8ddb8d"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="2vmin"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
+              />
+              <polyline
+                points="22 4 12 14.01 9 11.01"
+              />
+            </svg>
+            <span
+              style={
+                Object {
+                  "whiteSpace": "pre",
+                }
+              }
+            >
+              <span
+                className="sc-TOsTZ buljjU"
+                style={
+                  Object {
+                    "color": "#000",
+                  }
+                }
+                type="default"
+              >
+                master
+              </span>
+               
+              <svg
+                fill="none"
+                height="1.6vmin"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                style={
+                  Object {
+                    "display": "inline-block",
+                    "verticalAlign": "middle",
+                  }
+                }
+                viewBox="0 0 24 24"
+                width="1.6vmin"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="4"
+                />
+                <line
+                  x1="1.05"
+                  x2="7"
+                  y1="12"
+                  y2="12"
+                />
+                <line
+                  x1="17.01"
+                  x2="22.96"
+                  y1="12"
+                  y2="12"
+                />
+              </svg>
+               
+              <span
+                className="sc-kgAjT fCRwiO"
+                type="default"
+              >
+                48bd4ba
+              </span>
+            </span>
+            <span
+              style={
+                Object {
+                  "whiteSpace": "pre",
+                }
+              }
+            >
+              #
+              635
+               
+              <span
+                className="sc-cJSrbW kPkduk"
+                style={
+                  Object {
+                    "color": "#8ddb8d",
+                  }
+                }
+                type="default"
+              >
+                passed
+              </span>
+            </span>
+            <div
+              className="sc-jhAzac frhiXs"
+            >
+              bump(@mozaik/ui): bump @mozaik/ui to version 2.0.0-rc.2
+            </div>
+            <span
+              style={
+                Object {
+                  "gridColumnEnd": 4,
+                  "gridColumnStart": 2,
+                }
+              }
+            >
+              <span
+                className="sc-ksYbfQ cNsbJo"
+                style={
+                  Object {
+                    "whiteSpace": "pre",
+                  }
+                }
+                type="default"
+              >
+                <svg
+                  fill="none"
+                  height="1.6vmin"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                  width="1.6vmin"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                  />
+                  <polyline
+                    points="12 6 12 12 16 14"
+                  />
+                </svg>
+                 
+                about
+                 
+                <span
+                  className="sc-fBuWsC kdDwSw"
+                >
+                  2 days ago
+                </span>
+                 
+                in
+                 
+                <span
+                  className="sc-fBuWsC kdDwSw"
+                >
+                  6 min 14 sec
+                </span>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

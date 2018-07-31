@@ -1,8 +1,10 @@
 language: node_js
 node_js:
-  - '6'
+  - '8'
+  - '10'
 script:
-  - yarn run eslint
-  - yarn run test-cover
+  - yarn run lint
+  - yarn run fmt:check
+  - yarn run test:cover
 after_success:
-  - npm run coveralls
+  - yarn run coverage

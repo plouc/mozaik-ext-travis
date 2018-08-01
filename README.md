@@ -38,7 +38,7 @@ yarn add @mozaik/ext-travis
 
 ### Register client api
 
-You should register extension's client by adding this to `apis.js`:
+You should register extension's client by adding this to `register_apis.js`:
 
 ```javascript
 // …
